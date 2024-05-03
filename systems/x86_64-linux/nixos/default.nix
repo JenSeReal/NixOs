@@ -23,18 +23,17 @@ with lib.JenSeReal;
 
   services.fprintd.enable = true;
 
-  services.xserver = {
-    enable = true;
-    displayManager = {
+  services = {
+    xserver.enable = true;
+    xserver.displayManager = {
+      autoLogin.enable = true;
+      autoLogin.user = "jfp";
       sddm.enable = true;
       sddm.wayland.enable = true;
     };
+    xserver.desktopManager.plasma5 = enabled;
   };
 
-  services.desktopManager.plasma6 = enabled;
-
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "jfp";
   hardware.pulseaudio.enable = mkForce false;
 
   services.btrfs.autoScrub = {
@@ -42,8 +41,6 @@ with lib.JenSeReal;
     interval = "weekly";
     fileSystems = [ "/" ];
   };
-
-  programs.gnupg.agent.pinentryPackage = mkForce pkgs.pinentry-qt;
 
   services.xserver.libinput.enable = true;
 
@@ -186,7 +183,18 @@ with lib.JenSeReal;
     programs = { cli = { git = enabled; }; };
   };
 
-  sops.secrets."wifi.env" = { sopsFile = ../../shared/secrets/wifi.yml; };
+  sops.secrets = {
+    "wifi.env" = { sopsFile = ../../shared/secrets/wifi.yml; };
+    github_token = { sopsFile = ./secrets/secrets.yml; };
+  };
+
+  sops.templates."github-access-tokens.conf".content = ''
+    extra-access-tokens = github.com=${config.sops.placeholder.github_token}
+  '';
+
+  nix.extraOptions = ''
+    !include ${config.sops.templates."github-access-tokens.conf".path}
+  '';
 
   system.stateVersion = "23.11";
 }

@@ -19,4 +19,6 @@ with lib.JenSeReal; {
     sopsFile = ./secrets/ssh.yml;
     path = "${config.home.homeDirectory}/.ssh/hosts/jfp.one";
   };
+
+  nix.extraOptions = "";
 }

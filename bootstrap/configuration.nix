@@ -37,13 +37,11 @@
     packages = with pkgs; [ firefox freshfetch ];
   };
 
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "$DEFAULT_USER";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "$DEFAULT_USER";
 
-  services.xserver.enable = true;
-
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   services.xserver = {
     xkb.layout = "$XKB_LAYOUT";
