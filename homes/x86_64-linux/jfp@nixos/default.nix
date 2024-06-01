@@ -11,6 +11,7 @@ with lib.JenSeReal; {
         };
       };
       gui.terminal-emulator.kitty = enabled;
+      gui.ide.vscode = enabled;
     };
     security.sops = enabled;
   };

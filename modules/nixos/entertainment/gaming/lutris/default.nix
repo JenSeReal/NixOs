@@ -13,12 +13,15 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [
-        (lutris.override {
-          extraPkgs = pkgs: cfg.extraPackages;
-          extraLibraries = pkgs: cfg.extraLibraries;
-        })
-      ];
+    environment.systemPackages = with pkgs; [
+      wineWowPackages.stagingFull
+      wineWowPackages.waylandFull
+      winetricks
+      protontricks
+      (lutris.override {
+        extraPkgs = pkgs: cfg.extraPackages;
+        extraLibraries = pkgs: cfg.extraLibraries;
+      })
+    ];
   };
 }

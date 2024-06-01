@@ -1,4 +1,10 @@
-{ pkgs, lib, inputs, config, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  config,
+  ...
+}:
 with lib;
 with lib.JenSeReal;
 
@@ -17,21 +23,27 @@ with lib.JenSeReal;
 
   users.users."jfp" = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ firefox freshfetch ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [
+      firefox
+      freshfetch
+    ];
   };
 
-  services.fprintd.enable = true;
-
   services = {
-    xserver.enable = true;
-    xserver.displayManager = {
+    displayManager = {
       autoLogin.enable = true;
       autoLogin.user = "jfp";
       sddm.enable = true;
       sddm.wayland.enable = true;
     };
-    xserver.desktopManager.plasma5 = enabled;
+    desktopManager.plasma6 = enabled;
+    libinput = enabled;
+    fprintd = enabled;
+    printing = enabled;
   };
 
   hardware.pulseaudio.enable = mkForce false;
@@ -42,11 +54,7 @@ with lib.JenSeReal;
     fileSystems = [ "/" ];
   };
 
-  services.xserver.libinput.enable = true;
-
-  services.printing.enable = true;
-
-  security.pki.certificateFiles = [ ./T-TeleSec_GlobalRoot_Class_2.pem ];
+  security.pki.certificateFiles = [ ./certs/T-TeleSec_GlobalRoot_Class_2.pem ];
 
   environment.systemPackages = with pkgs; [
     btop
@@ -60,6 +68,7 @@ with lib.JenSeReal;
     hunspellDicts.en_US
     hunspellDicts.de_DE
     onlyoffice-bin
+    spotify
   ];
   programs.nix-ld.enable = true;
 
@@ -88,7 +97,9 @@ with lib.JenSeReal;
           key-mgmt = "wpa-psk";
           psk = "$FRITZBox_7590_EW";
         };
-        ipv4 = { method = "auto"; };
+        ipv4 = {
+          method = "auto";
+        };
         ipv6 = {
           addr-gen-mode = "default";
           method = "auto";
@@ -110,7 +121,9 @@ with lib.JenSeReal;
           key-mgmt = "wpa-psk";
           psk = "$FRITZBox_6690_BD";
         };
-        ipv4 = { method = "auto"; };
+        ipv4 = {
+          method = "auto";
+        };
         ipv6 = {
           addr-gen-mode = "default";
           method = "auto";
@@ -132,7 +145,9 @@ with lib.JenSeReal;
           key-mgmt = "wpa-psk";
           psk = "$PPPNetz";
         };
-        ipv4 = { method = "auto"; };
+        ipv4 = {
+          method = "auto";
+        };
         ipv6 = {
           addr-gen-mode = "default";
           method = "auto";
@@ -163,7 +178,9 @@ with lib.JenSeReal;
         defaultSopsFile = secrets/secrets.yml;
       };
     };
-    services = { fwupd = enabled; };
+    services = {
+      fwupd = enabled;
+    };
     system = {
       boot = {
         enable = true;
@@ -180,12 +197,20 @@ with lib.JenSeReal;
       shells.addons.starship = enabled;
       time = enabled;
     };
-    programs = { cli = { git = enabled; }; };
+    programs = {
+      cli = {
+        git = enabled;
+      };
+    };
   };
 
   sops.secrets = {
-    "wifi.env" = { sopsFile = ../../shared/secrets/wifi.yml; };
-    github_token = { sopsFile = ./secrets/secrets.yml; };
+    "wifi.env" = {
+      sopsFile = ../../shared/secrets/wifi.yml;
+    };
+    github_token = {
+      sopsFile = ./secrets/secrets.yml;
+    };
   };
 
   sops.templates."github-access-tokens.conf".content = ''

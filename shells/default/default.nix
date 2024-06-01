@@ -9,7 +9,7 @@ mkShell {
     nix-index
     nix-prefetch-git
     nil
-    nixfmt
+    nixfmt-rfc-style
     nixpkgs-fmt
     nixpkgs-hammering
     nixpkgs-lint
