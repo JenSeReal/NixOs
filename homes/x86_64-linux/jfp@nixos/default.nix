@@ -1,6 +1,7 @@
 { lib, config, ... }:
 with lib;
-with lib.JenSeReal; {
+with lib.JenSeReal;
+{
   JenSeReal = {
     programs = {
       cli = {
@@ -9,11 +10,17 @@ with lib.JenSeReal; {
           enable = true;
           includes = [ "${config.home.homeDirectory}/.ssh/hosts/jfp.one" ];
         };
+        direnv = enabled;
       };
       gui.terminal-emulator.kitty = enabled;
       gui.ide.vscode = enabled;
     };
     security.sops = enabled;
+    system.shells = {
+      fish = enabled;
+      nushell = enabled;
+      addons.starship = enabled;
+    };
   };
 
   sops.secrets."ssh/jfp.one" = {

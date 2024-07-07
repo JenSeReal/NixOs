@@ -1,6 +1,8 @@
 # configuration_bootstrap.nix
-{ pkgs, ... }: {
-  imports = [ # Include the results of the hardware scan.
+{ pkgs, ... }:
+{
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -9,7 +11,11 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.enable = true;
-  boot.supportedFilesystems = [ "btrfs" "ntfs" "fat32" ];
+  boot.supportedFilesystems = [
+    "btrfs"
+    "ntfs"
+    "fat32"
+  ];
   hardware.enableAllFirmware = true;
 
   networking.hostName = "$HOSTNAME";
@@ -33,8 +39,14 @@
 
   users.users."$DEFAULT_USER" = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ firefox freshfetch ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [
+      firefox
+      freshfetch
+    ];
   };
 
   services.displayManager.autoLogin.enable = true;
@@ -67,6 +79,12 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = "nix-command flakes";
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   environment.systemPackages = with pkgs; [
     btop

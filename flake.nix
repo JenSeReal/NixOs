@@ -12,7 +12,7 @@
 
     nur.url = "github:nix-community/NUR";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     fw-ectool = {
       url = "github:tlvince/ectool.nix";

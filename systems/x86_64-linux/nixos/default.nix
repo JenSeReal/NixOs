@@ -10,10 +10,12 @@ with lib.JenSeReal;
 
 {
   imports = with inputs; [
-    nixos-hardware.nixosModules.framework-13-7040-amd
+    nixos-hardware.nixosModules.common-hidpi
+    # nixos-hardware.nixosModules.framework-13-7040-amd
     ./hardware-configuration.nix
   ];
 
+  # hardware.framework.amd-7040.preventWakeOnAC = true;
   hardware.enableAllFirmware = true;
 
   #boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
@@ -69,6 +71,7 @@ with lib.JenSeReal;
     hunspellDicts.de_DE
     onlyoffice-bin
     spotify
+    vlc
   ];
   programs.nix-ld.enable = true;
 
