@@ -19,7 +19,7 @@ in
         };
         time = {
           disabled = false;
-          format = "🕙[ $time ]($style)";
+          format = ''🕙[$time]($style)'';
         };
         right_format = "$time";
       };
