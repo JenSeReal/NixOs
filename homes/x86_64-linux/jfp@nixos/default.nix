@@ -3,6 +3,9 @@ with lib;
 with lib.JenSeReal;
 {
   JenSeReal = {
+    desktop = {
+      environment.sway = enabled;
+    };
     programs = {
       cli = {
         git = enabled;
@@ -12,7 +15,9 @@ with lib.JenSeReal;
         };
         direnv = enabled;
       };
+
       gui.terminal-emulator.kitty = enabled;
+      gui.terminal-emulator.wezterm = enabled;
       gui.ide.vscode = enabled;
     };
     security.sops = enabled;

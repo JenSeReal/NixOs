@@ -1,7 +1,14 @@
-{ config, lib, pkgs, inputs, system, ... }:
-with lib;
-with lib.JenSeReal;
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
 let
+  inherit (lib) mkIf mkEnableOption mkDefault;
+
   cfg = config.JenSeReal.programs.gui.ide.vscode;
   is-darwin = pkgs.stdenv.isDarwin;
 
@@ -9,22 +16,26 @@ let
 
   vscodePname = config.programs.vscode.package.pname;
 
-  configDir = {
-    "vscode" = "Code";
-    "vscode-insiders" = "Code - Insiders";
-    "vscodium" = "VSCodium";
-  }.${vscodePname};
+  configDir =
+    {
+      "vscode" = "Code";
+      "vscode-insiders" = "Code - Insiders";
+      "vscodium" = "VSCodium";
+    }
+    .${vscodePname};
 
-  userDir = if is-darwin then
-    "Library/Application Support/${configDir}/User"
-  else
-    "${config.xdg.configHome}/${configDir}/User";
+  userDir =
+    if is-darwin then
+      "Library/Application Support/${configDir}/User"
+    else
+      "${config.xdg.configHome}/${configDir}/User";
 
   configFilePath = "${userDir}/settings.json";
   # keybindingsFilePath = "${userDir}/keybindings.json";
 
   pathsToMakeWritable = lib.flatten [ configFilePath ];
-in {
+in
+{
   options.JenSeReal.programs.gui.ide.vscode = {
     enable = mkEnableOption "Whether or not to enable vs code.";
   };
@@ -45,34 +56,8 @@ in {
       enable = true;
 
       userSettings = {
-        "html.autoClosingTags" = true;
-        "javascript.autoClosingTags" = true;
-        "typescript.autoClosingTags" = true;
-
-        "javascript.suggest.autoImports" = true;
-        "typescript.suggest.autoImports" = true;
-        "javascript.updateImportsOnFileMove.enabled" = "always";
-        "typescript.updateImportsOnFileMove.enabled" = "always";
-
-        "javascript.preferences.renameMatchingJsxTags" = true;
-        "typescript.preferences.renameMatchingJsxTags" = true;
-
-        "css.format.enable" = true;
-        "css.format.newlineBetweenRules" = true;
-        "css.format.newlineBetweenSelectors" = true;
-        "css.format.spaceAroundSelectorSeparator" = true;
-
-        "yaml.format.enable" = true;
-        "yaml.extension.recommendations" = false;
-
-        "kotlin.languageServer.path" = "\${env:KOTLIN-LSP}";
-
-        "[json][jsonc]" = {
-          "editor.defaultFormatter" = "vscode.json-language-features";
-          "editor.tabSize" = 2;
-          "editor.insertSpaces" = true;
-          "editor.formatOnSave" = true;
-          "editor.formatOnPaste" = true;
+        "[html][css][scss][less]" = {
+          "editor.defaultFormatter" = "vscode.css-language-features";
         };
 
         "[javascript][javascriptreact][typescript]" = {
@@ -82,8 +67,23 @@ in {
           "editor.formatOnSave" = true;
           "editor.formatOnPaste" = true;
         };
-        "[html][css][scss][less]" = {
-          "editor.defaultFormatter" = "vscode.css-language-features";
+
+        "[java][gradle]" = {
+          "spotlessGradle.diagnostics.enable" = true;
+          "spotlessGradle.format.enable" = true;
+          "editor.defaultFormatter" = "richardwillis.vscode-spotless-gradle";
+          "editor.codeActionsOnSave" = {
+            "source.fixAll.spotlessGradle" = "always";
+          };
+        };
+
+        "[kotlin][gradle-kotlin-dsl]" = {
+          "editor.defaultFormatter" = "esafirm.kotlin-formatter";
+          "spotlessGradle.diagnostics.enable" = true;
+          "spotlessGradle.format.enable" = true;
+          "editor.codeActionsOnSave" = {
+            "source.fixAll.spotlessGradle" = "always";
+          };
         };
 
         "[nix][toml][rust][adoc][markdown][yaml]" = {
@@ -103,80 +103,83 @@ in {
           "editor.defaultFormatter" = "nvarner.typst-lsp";
         };
 
-        "[java][gradle]" = {
-          "spotlessGradle.diagnostics.enable" = true;
-          "spotlessGradle.format.enable" = true;
-          "editor.defaultFormatter" = "richardwillis.vscode-spotless-gradle";
-          "editor.codeActionsOnSave" = {
-            "source.fixAll.spotlessGradle" = true;
-          };
+        "codeium.enableConfig" = {
+          "*" = true;
+          "nix" = true;
         };
 
-        "[kotlin][gradle-kotlin-dsl]" = {
-          "editor.defaultFormatter" = "cstef.kotlin-formatter";
-          "spotlessGradle.diagnostics.enable" = true;
-          "spotlessGradle.format.enable" = true;
-          "editor.codeActionsOnSave" = {
-            "source.fixAll.spotlessGradle" = true;
-          };
-        };
+        "css.format.enable" = true;
+        "css.format.newlineBetweenRules" = true;
+        "css.format.newlineBetweenSelectors" = true;
+        "css.format.spaceAroundSelectorSeparator" = true;
 
-        "editor.fontFamily" = lib.mkDefault "Fira Code";
         "editor.bracketPairColorization.enabled" = true;
-        "explorer.confirmDelete" = false;
-        "explorer.confirmDragAndDrop" = false;
+        "editor.fontFamily" = lib.mkDefault "Fira Code";
         "editor.fontLigatures" = true;
+        "editor.inlayHints.enabled" = "on";
         "editor.linkedEditing" = true;
         "editor.codeActionsOnSave" = {
-          "source.addMissingImports" = true;
-          "source.organizeImports" = true;
-          "source.sortImports" = true;
-          "source.fixAll" = true;
-          "quickfix.biome" = true;
-          "source.organizeImports.biome" = true;
+          "source.addMissingImports" = "always";
+          "source.organizeImports" = "always";
+          "source.sortImports" = "always";
+          "source.fixAll" = "always";
+          "quickfix.biome" = "always";
+          "source.organizeImports.biome" = "always";
         };
-        "editor.inlayHints.enabled" = "on";
+
+        "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
 
         "files.trimTrailingWhitespace" = true;
 
-        "indentRainbow.indicatorStyle" = "light";
-        "indentRainbow.lightIndicatorStyleLineWidth" = 1;
+        "html.autoClosingTags" = true;
         "indentRainbow.colors" = [
           "rgba(255,255,64,0.3)"
           "rgba(127,255,127,0.3)"
           "rgba(255,127,255,0.3)"
           "rgba(79,236,236,0.3)"
         ];
-
+        "indentRainbow.indicatorStyle" = "light";
+        "indentRainbow.lightIndicatorStyleLineWidth" = 1;
+        "javascript.autoClosingTags" = true;
+        "javascript.preferences.renameMatchingJsxTags" = true;
+        "javascript.suggest.autoImports" = true;
+        "javascript.updateImportsOnFileMove.enabled" = "always";
         "keyboard.dispatch" = "keyCode";
 
         "nix.enableLanguageServer" = true;
         "nix.formatterPath" = "nixfmt";
-        "nix.serverPath" = "nil";
+        "nix.serverPath" = "nixd";
         "nix.serverSettings" = {
-          "nil" = { "formatting" = { "command" = [ "nixfmt" ]; }; };
+          "nixd" = {
+            "formatting" = {
+              "command" = [ "nixfmt" ];
+            };
+          };
         };
 
         "remote.SSH.useLocalServer" = false;
 
         "telemetry.telemetryLevel" = "all";
         "terminal.integrated.fontFamily" = mkDefault "Fira Code";
+        "terminal.integrated.cursorStyle" = mkDefault "line";
         "typst-lsp.experimentalFormatterMode" = "on";
 
         "vsicons.dontShowNewVersionMessage" = true;
 
-        "window.titleBarStyle" = "custom";
-        "window.menuBarVisibility" = mkIf (!is-darwin) "toggle";
         "window.commandCenter" = false;
-
+        "window.menuBarVisibility" = mkIf (!is-darwin) "toggle";
+        "window.titleBarStyle" = "custom";
         "workbench.colorTheme" = mkDefault "SynthWave '84";
-        "workbench.startupEditor" = "none";
-        "workbench.sideBar.location" = "right";
-        "workbench.layoutControl.enabled" = false;
         "workbench.iconTheme" = "vscode-icons";
+        "workbench.layoutControl.enabled" = false;
+        "workbench.sideBar.location" = "right";
+        "workbench.startupEditor" = "none";
+        "workbench.tree.indent" = 4;
       };
 
-      extensions = with extensions.vscode-marketplace;
+      extensions =
+        with extensions.vscode-marketplace;
         [
           yzhang.markdown-all-in-one
           asciidoctor.asciidoctor-vscode
@@ -190,7 +193,7 @@ in {
           redhat.vscode-xml
           oderwat.indent-rainbow
           rust-lang.rust-analyzer
-          serayuzgur.crates
+          fill-labs.dependi
           vadimcn.vscode-lldb
           pflannery.vscode-versionlens
           lorenzopirro.rust-flash-snippets
@@ -215,8 +218,15 @@ in {
           vscjava.vscode-maven
           vscjava.vscode-java-dependency
           vscjava.vscode-spring-initializr
-          # vscjava.vscode-gradle
-        ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
+          vscjava.vscode-gradle
+          codeium.codeium
+          richardwillis.vscode-spotless-gradle
+          mathiasfrohlich.kotlin
+          esafirm.kotlin-formatter
+          nvarner.typst-lsp
+          mgt19937.typst-preview
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
 
       keybindings = [ ];
     };

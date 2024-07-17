@@ -3,10 +3,11 @@
   lib,
   inputs,
   config,
+  namespace,
   ...
 }:
 with lib;
-with lib.JenSeReal;
+with lib.${namespace};
 
 {
   imports = with inputs; [
@@ -23,6 +24,8 @@ with lib.JenSeReal;
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
+  users.defaultUserShell = pkgs.nushell;
+
   users.users."jfp" = {
     isNormalUser = true;
     extraGroups = [
@@ -36,13 +39,6 @@ with lib.JenSeReal;
   };
 
   services = {
-    displayManager = {
-      autoLogin.enable = true;
-      autoLogin.user = "jfp";
-      sddm.enable = true;
-      sddm.wayland.enable = true;
-    };
-    desktopManager.plasma6 = enabled;
     libinput = enabled;
     fprintd = enabled;
     printing = enabled;
@@ -72,8 +68,12 @@ with lib.JenSeReal;
     onlyoffice-bin
     spotify
     vlc
+    thunderbird
+    eyedropper
+    codeium
   ];
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = [ ];
 
   programs.neovim = {
     enable = true;
@@ -160,11 +160,12 @@ with lib.JenSeReal;
     };
   };
 
-  JenSeReal = {
+  ${namespace} = {
     entertainment.gaming = {
       lutris = enabled;
       steam = enabled;
     };
+    desktop.environment.sway = enabled;
     hardware = {
       audio.pipewire = enabled;
       bluetooth = enabled;

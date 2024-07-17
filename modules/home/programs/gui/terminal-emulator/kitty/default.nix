@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."kitty/current-theme.conf".source = ./themes/synthwave.conf;
+    xdg.configFile."kitty/current-theme.conf".source = ./themes/synthwave84.conf;
     programs.kitty = {
       enable = true;
       settings = {

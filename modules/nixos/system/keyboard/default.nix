@@ -1,10 +1,18 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
+let
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
+  inherit (types) str;
+  cfg = config.${namespace}.system.keyboard;
+in
+{
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.system.keyboard;
-in {
-  options.JenSeReal.system.keyboard = with types; {
+  options.${namespace}.system.keyboard = {
     enable = mkEnableOption "Options for the keyboard.";
     xkb_layout = mkOpt str "de" "The xkb layout for the keyboard";
     xkb_variant = mkOpt str "nodeadkeys" "The xkb variant for the keyboard";
