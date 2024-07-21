@@ -5,11 +5,11 @@
   namespace,
   ...
 }:
-with lib;
-with lib.${namespace};
-
 let
   cfg = config.${namespace}.desktop.window-manager.sway;
+
+  inherit (lib) mkEnableOption mkIf;
+  inherit (lib.${namespace}) mkStrOpt enabled;
 
   workspaces = builtins.concatStringsSep "\n" (
     builtins.concatLists (
@@ -33,9 +33,9 @@ let
   );
 in
 {
-  options.${namespace}.desktop.window-manager.sway = with types; {
+  options.${namespace}.desktop.window-manager.sway = {
     enable = mkEnableOption "Whether or not to enable sway window manager.";
-    extraConfig = mkOpt str "" "Additional configuation for the sway window manager.";
+    extraConfig = mkStrOpt "" "Additional configuation for the sway window manager.";
   };
 
   config = mkIf cfg.enable {
@@ -70,6 +70,16 @@ in
         export XDG_SESSION_DESKTOP=sway
         export XDG_CURRENT_DESKTOP=sway
       '';
+    };
+
+    xdg = {
+      portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-wlr
+          xdg-desktop-portal-gtk
+        ];
+      };
     };
 
     ${namespace}.home.configFile."sway/config".text = ''
@@ -117,12 +127,12 @@ in
       slurp
       wl-clipboard
       mako
-      (pkgs.writeTextFile {
+      (writeTextFile {
         name = "startsway";
         destination = "/bin/startsway";
         executable = true;
         text = ''
-          #! ${pkgs.bash}/bin/bash
+          #! ${bash}/bin/bash
 
           # Import environment variables from the login manager
           systemctl --user import-environment

@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf getExe;
+  inherit (lib) mkIf getExe getExe';
   inherit (lib.${namespace}) mkBoolOpt;
   cfg = config.${namespace}.desktop.window-manager.wayland.sway;
 in
@@ -30,6 +30,12 @@ in
             xkb_options = "caps:escape";
           };
         };
+        startup = [
+          {
+            command = "${getExe' pkgs.networkmanagerapplet "nm-applet"} --indicator";
+            always = true;
+          }
+        ];
         window.titlebar = false;
         window.hideEdgeBorders = "smart";
       };

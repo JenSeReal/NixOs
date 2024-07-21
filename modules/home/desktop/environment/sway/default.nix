@@ -18,6 +18,7 @@ in
     ${namespace}.desktop = {
       window-manager.wayland.sway = enabled;
       bars.waybar = enabled;
+      layout-manager.kanshi = enabled;
     };
   };
 }

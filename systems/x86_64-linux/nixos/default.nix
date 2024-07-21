@@ -71,6 +71,7 @@ with lib.${namespace};
     thunderbird
     eyedropper
     codeium
+    networkmanagerapplet
   ];
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [ ];

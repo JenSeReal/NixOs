@@ -6,9 +6,12 @@
   ...
 }:
 let
-  inherit (lib) mkIf getExe;
+  inherit (lib) mkIf getExe';
   inherit (lib.${namespace}) mkBoolOpt;
   cfg = config.${namespace}.desktop.bars.waybar;
+
+  style = builtins.readFile ./styles.css;
+  synthwave84 = builtins.readFile ./synthwave84.css;
 in
 {
   options.${namespace}.desktop.bars.waybar = {
@@ -20,94 +23,157 @@ in
       enable = true;
       settings = {
         mainBar = {
-          "layer" = "top";
-          "position" = "bottom";
-          "modules-left" = [ "sway/workspaces" ];
-          "modules-center" = [ "sway/window" ];
-          "modules-right" = [
-            "custom/media"
-            "cpu"
-            "memory"
-            "tray"
-            "backlight"
+          layer = "top";
+          position = "bottom";
+          spacing = 0;
+          modules-left = [
+            "sway/workspaces"
+            "custom/arGap"
+            "custom/archthing"
+            "custom/wsGap"
+          ];
+          modules-center = [
+            "custom/mgl"
+            "sway/window"
+            "custom/mgr"
+          ];
+          modules-right = [
+            "custom/paGap"
             "pulseaudio"
+            "custom/blGap"
+            "backlight"
+            "custom/baGap"
             "battery"
+            "custom/netGap"
+            "network"
+            "custom/trayGap"
+            "tray"
+            "custom/clGap"
             "clock"
           ];
-
-          "pulseaudio" = {
-            "tooltip" = false;
-            "scroll-step" = 1;
-            "format" = "{icon} {volume}%";
-            "format-muted" = "{icon} {volume}%";
-            "on-click" = "pavucontrol";
-            "format-icons" = {
-              "default" = [
-                ""
-                ""
-                ""
-              ];
-            };
+          "sway/window" = {
+            "all-outputs" = true;
+            "offscreen-css" = true;
+            "offscreen-css-text" = "(inactive)";
           };
-
-          "network" = {
-            "tooltip" = false;
-            "format-wifi" = "  {essid}";
-            "format-ethernet" = "";
+          "custom/arGap" = {
+            format = "";
+            tooltip = false;
           };
-          "backlight" = {
-            "tooltip" = false;
-            "format" = " {}%";
-            "interval" = 1;
+          "custom/archthing" = {
+            format = "";
+            tooltip = false;
+            "on-click" = "rofi -show drun -normal-window -steal-focus -modes drun,run,filebrowser,window";
           };
-          "battery" = {
-            "states" = {
-              "good" = 95;
-              "warning" = 30;
-              "critical" = 20;
-            };
-            "format" = "{icon}  {capacity}%";
-            "format-charging" = " {capacity}%";
-            "format-plugged" = " {capacity}%";
-            "format-alt" = "{time} {icon}";
+          "custom/wsGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/mgl" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/mgr" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/paGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/blGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/baGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/netGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/clGap" = {
+            format = "";
+            tooltip = false;
+          };
+          "custom/trayGap" = {
+            format = "";
+            tooltip = false;
+          };
+          clock = {
+            format = "<span font='13'>{:%H:%M:%S}</span>";
+            "tooltip-format" = "{:%A, %B %d, %Y | %H:%M %Z}";
+            "on-click" = "galendae";
+          };
+          backlight = {
+            format = "󰃠{icon}";
+            tooltip = true;
+            "tooltip-format" = "{percent}%";
             "format-icons" = [
-              ""
-              ""
-              ""
-              ""
-              ""
+              "󰣾"
+              "󰣴"
+              "󰣶"
+              "󰣸"
+              "󰣺"
             ];
           };
-          "tray" = {
-            "icon-size" = 18;
-            "spacing" = 10;
-          };
-          "cpu" = {
-            "interval" = 15;
-            "format" = " {}%";
-            "max-length" = 10;
-          };
-          "memory" = {
-            "interval" = 30;
-            "format" = " {}%";
-            "max-length" = 10;
-          };
-          "custom/media" = {
-            "interval" = 30;
-            "format" = "{icon} {}";
-            "return-type" = "json";
-            "max-length" = 20;
-            "format-icons" = {
-              "spotify" = " ";
-              "default" = " ";
+          battery = {
+            states = {
+              warning = 30;
+              critical = 15;
             };
-            "escape" = true;
-            "exec" = "$HOME/.config/system_scripts/mediaplayer.py 2> /dev/null";
-            "on-click" = "playerctl play-pause";
+            format = "{icon}";
+            "tooltip-format" = "{capacity}%  |  {time}";
+            "format-charging" = "{icon}";
+            "format-icons" = [
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
+          };
+          network = {
+            format = "󰖩{icon}";
+            "tooltip-format" = "{essid}  |  {ipaddr}  |  {ifname}";
+            "format-icons" = [
+              "󰣾"
+              "󰣴"
+              "󰣶"
+              "󰣸"
+              "󰣺"
+            ];
+            "on-click-right" = "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
+            "format-disconnected" = "󰖩󰣽";
+          };
+          pulseaudio = {
+            format = "󰕾{icon}";
+            "tooltip-format" = "{volume}%";
+            "format-muted" = "󰖁{icon}";
+            "format-icons" = {
+              default = [
+                "󰣾"
+                "󰣴"
+                "󰣶"
+                "󰣸"
+                "󰣺"
+              ];
+            };
+            "enable-bar-scroll" = true;
           };
         };
       };
-      style = ./styles.css;
+      style = ''
+        ${style}
+
+        ${synthwave84}
+      '';
     };
   };
 }

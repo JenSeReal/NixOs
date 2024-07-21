@@ -5,14 +5,15 @@
   pkgs,
   ...
 }:
-with lib;
-with lib.${namespace};
 
 let
+  inherit (lib) mkEnableOption mkIf;
+  inherit (lib.${namespace}) enabled;
+
   cfg = config.${namespace}.desktop.environment.sway;
 in
 {
-  options.${namespace}.desktop.environment.sway = with types; {
+  options.${namespace}.desktop.environment.sway = {
     enable = mkEnableOption "Whether or not to enable sway window manager.";
   };
 
@@ -30,6 +31,8 @@ in
       slurp
       wl-clipboard
       mako
+      kanshi
+      nwg-displays
     ];
   };
 }
