@@ -1,0 +1,14 @@
+name: Update Flake Inputs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 2 * * *
+
+jobs:
+  update-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: snowfallorg/thaw-action@main
