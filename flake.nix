@@ -12,7 +12,7 @@
 
     nur.url = "github:nix-community/NUR";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
 
     fw-ectool = {
       url = "github:tlvince/ectool.nix";
@@ -20,7 +20,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.3.0";
+      url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "unstable";
     };
 
@@ -125,7 +125,6 @@
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             vscode-server.nixosModules.default
-            nixos-hardware.nixosModules.common-hidpi
           ];
         };
       };

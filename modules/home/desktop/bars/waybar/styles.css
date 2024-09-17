@@ -1,7 +1,7 @@
 * {
   /* `otf-font-awesome` is required to be installed for icons */
   font-family: FontAwesome;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 window#waybar {
@@ -61,7 +61,7 @@ button:hover {
   background-color: @red-color;
 }
 
-#custom-archthing {
+#idle_inhibitor {
   font-size: 29px;
   color: @base-color;
   background-color: @red-color;
@@ -74,7 +74,7 @@ button:hover {
 
 #custom-mgl {
   font-size: 29px;
-  color: @pink-color;
+  color: @green-color;
 }
 
 #custom-playerctl {
@@ -87,7 +87,7 @@ button:hover {
 
 #custom-mgr {
   font-size: 29px;
-  color: @pink-color;
+  color: @green-color;
 }
 
 #window {
@@ -127,6 +127,10 @@ button:hover {
   color: @cyan-color;
   background-color: rgba(0, 0, 0, 0);
   font-size: 29px;
+}
+
+#clock {
+  font-size: 16px;
 }
 
 #pulseaudio {
@@ -177,6 +181,7 @@ button:hover {
 #custom-clGap {
   font-size: 29px;
   color: @cyan-color;
+  background-color: @green-color;
 }
 
 #custom-trayGap {

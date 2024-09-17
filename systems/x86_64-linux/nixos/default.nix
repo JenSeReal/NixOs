@@ -6,13 +6,15 @@
   namespace,
   ...
 }:
-with lib;
-with lib.${namespace};
+let
+  inherit (lib) mkForce;
+  inherit (lib.${namespace}) enabled;
 
+in
 {
   imports = with inputs; [
     nixos-hardware.nixosModules.common-hidpi
-    # nixos-hardware.nixosModules.framework-13-7040-amd
+    nixos-hardware.nixosModules.framework-13-7040-amd
     ./hardware-configuration.nix
   ];
 
@@ -54,6 +56,14 @@ with lib.${namespace};
 
   security.pki.certificateFiles = [ ./certs/T-TeleSec_GlobalRoot_Class_2.pem ];
 
+  security.pam.services.swaylock = {
+    text = ''
+      auth sufficient pam_unix.so try_first_pass likeauth nullok
+      auth sufficient pam_fprintd.so
+      auth include login
+    '';
+  };
+
   environment.systemPackages = with pkgs; [
     btop
     curl
@@ -72,7 +82,15 @@ with lib.${namespace};
     eyedropper
     codeium
     networkmanagerapplet
+    yazi
+    gnome.nautilus
+    davinci-resolve
+    kdePackages.kdenlive
+    ffmpeg-full
+    glaxnimate
   ];
+  services.gvfs.enable = true;
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = [ ];
 

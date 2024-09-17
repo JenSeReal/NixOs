@@ -18,6 +18,7 @@ in {
       wineWowPackages.waylandFull
       winetricks
       protontricks
+      vulkan-tools
       (lutris.override {
         extraPkgs = pkgs: cfg.extraPackages;
         extraLibraries = pkgs: cfg.extraLibraries;

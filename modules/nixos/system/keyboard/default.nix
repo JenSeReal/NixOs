@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   namespace,
@@ -26,7 +27,11 @@ in
       options = cfg.xkb_options;
     };
 
-    console.useXkbConfig = true;
+    console = {
+      packages = [ pkgs.terminus_font ];
+      font = "${pkgs.terminus_font}/share/consolefonts/ter-v16n.psf.gz";
+      useXkbConfig = true;
+    };
 
     environment.sessionVariables = {
       XKB_LAYOUT = cfg.xkb_layout;

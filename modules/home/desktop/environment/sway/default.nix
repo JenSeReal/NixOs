@@ -19,6 +19,9 @@ in
       window-manager.wayland.sway = enabled;
       bars.waybar = enabled;
       layout-manager.kanshi = enabled;
+      locker.swaylock = enabled;
+      service.swayidle = enabled;
+      wallpaper.swww = enabled;
     };
   };
 }

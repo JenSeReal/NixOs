@@ -1,8 +1,8 @@
 {
   config,
   lib,
-  pkgs,
   inputs,
+  pkgs,
   system,
   ...
 }:
@@ -12,7 +12,7 @@ let
   cfg = config.JenSeReal.programs.gui.ide.vscode;
   is-darwin = pkgs.stdenv.isDarwin;
 
-  extensions = inputs.nix-vscode-extensions.extensions.${system};
+  extensions = inputs.nix-vscode-extensions.extensions.${system}.vscode-marketplace;
 
   vscodePname = config.programs.vscode.package.pname;
 
@@ -53,6 +53,7 @@ in
   config = mkIf cfg.enable {
     services.vscode-server.enable = true;
     programs.vscode = {
+
       enable = true;
 
       userSettings = {
@@ -114,7 +115,7 @@ in
         "css.format.spaceAroundSelectorSeparator" = true;
 
         "editor.bracketPairColorization.enabled" = true;
-        "editor.fontFamily" = lib.mkDefault "Fira Code";
+        "editor.fontFamily" = lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
         "editor.fontLigatures" = true;
         "editor.inlayHints.enabled" = "on";
         "editor.linkedEditing" = true;
@@ -161,7 +162,7 @@ in
         "remote.SSH.useLocalServer" = false;
 
         "telemetry.telemetryLevel" = "all";
-        "terminal.integrated.fontFamily" = mkDefault "Fira Code";
+        "terminal.integrated.fontFamily" = mkDefault "'FiraCode Nerd Font', 'monospace'";
         "terminal.integrated.cursorStyle" = mkDefault "line";
         "typst-lsp.experimentalFormatterMode" = "on";
 
@@ -178,55 +179,52 @@ in
         "workbench.tree.indent" = 4;
       };
 
-      extensions =
-        with extensions.vscode-marketplace;
-        [
-          yzhang.markdown-all-in-one
-          asciidoctor.asciidoctor-vscode
-          tamasfe.even-better-toml
-          redhat.vscode-yaml
-          ms-azuretools.vscode-docker
-          usernamehw.errorlens
-          shardulm94.trailing-spaces
-          christian-kohler.path-intellisense
-          vscode-icons-team.vscode-icons
-          redhat.vscode-xml
-          oderwat.indent-rainbow
-          rust-lang.rust-analyzer
-          fill-labs.dependi
-          vadimcn.vscode-lldb
-          pflannery.vscode-versionlens
-          lorenzopirro.rust-flash-snippets
-          zhangyue.rust-mod-generator
-          jedeop.crates-completer
-          jscearcy.rust-doc-viewer
-          biomejs.biome
-          rangav.vscode-thunder-client
-          dotjoshjohnson.xml
-          jgclark.vscode-todo-highlight
-          gruntfuggly.todo-tree
-          chrmarti.regex
-          aaron-bond.better-comments
-          ms-vsliveshare.vsliveshare
-          pinage404.nix-extension-pack
-          robbowen.synthwave-vscode
-          ms-vscode-remote.vscode-remote-extensionpack
-          formulahendry.docker-explorer
-          redhat.java
-          vscjava.vscode-java-test
-          vscjava.vscode-java-debug
-          vscjava.vscode-maven
-          vscjava.vscode-java-dependency
-          vscjava.vscode-spring-initializr
-          vscjava.vscode-gradle
-          codeium.codeium
-          richardwillis.vscode-spotless-gradle
-          mathiasfrohlich.kotlin
-          esafirm.kotlin-formatter
-          nvarner.typst-lsp
-          mgt19937.typst-preview
-        ]
-        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
+      extensions = [
+        extensions.yzhang.markdown-all-in-one
+        extensions.asciidoctor.asciidoctor-vscode
+        extensions.tamasfe.even-better-toml
+        extensions.redhat.vscode-yaml
+        extensions.ms-azuretools.vscode-docker
+        extensions.usernamehw.errorlens
+        extensions.shardulm94.trailing-spaces
+        extensions.christian-kohler.path-intellisense
+        extensions.vscode-icons-team.vscode-icons
+        extensions.redhat.vscode-xml
+        extensions.oderwat.indent-rainbow
+        extensions.rust-lang.rust-analyzer
+        extensions.fill-labs.dependi
+        extensions.vadimcn.vscode-lldb
+        extensions.pflannery.vscode-versionlens
+        extensions.lorenzopirro.rust-flash-snippets
+        extensions.zhangyue.rust-mod-generator
+        extensions.jedeop.crates-completer
+        extensions.jscearcy.rust-doc-viewer
+        extensions.biomejs.biome
+        extensions.rangav.vscode-thunder-client
+        extensions.dotjoshjohnson.xml
+        extensions.jgclark.vscode-todo-highlight
+        extensions.gruntfuggly.todo-tree
+        extensions.chrmarti.regex
+        extensions.aaron-bond.better-comments
+        extensions.ms-vsliveshare.vsliveshare
+        extensions.pinage404.nix-extension-pack
+        extensions.robbowen.synthwave-vscode
+        extensions.ms-vscode-remote.vscode-remote-extensionpack
+        extensions.formulahendry.docker-explorer
+        extensions.redhat.java
+        extensions.vscjava.vscode-java-test
+        extensions.vscjava.vscode-java-debug
+        extensions.vscjava.vscode-maven
+        extensions.vscjava.vscode-java-dependency
+        extensions.vscjava.vscode-spring-initializr
+        extensions.vscjava.vscode-gradle
+        extensions.codeium.codeium
+        extensions.richardwillis.vscode-spotless-gradle
+        extensions.mathiasfrohlich.kotlin
+        extensions.esafirm.kotlin-formatter
+        extensions.nvarner.typst-lsp
+        extensions.mgt19937.typst-preview
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
 
       keybindings = [ ];
     };

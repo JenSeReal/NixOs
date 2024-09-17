@@ -29,12 +29,12 @@ in
           modules-left = [
             "sway/workspaces"
             "custom/arGap"
-            "custom/archthing"
+            "idle_inhibitor"
             "custom/wsGap"
           ];
           modules-center = [
             "custom/mgl"
-            "sway/window"
+            "clock"
             "custom/mgr"
           ];
           modules-right = [
@@ -48,9 +48,14 @@ in
             "network"
             "custom/trayGap"
             "tray"
-            "custom/clGap"
-            "clock"
           ];
+          "idle_inhibitor" = {
+            "format" = "{icon}";
+            "format-icons" = {
+              "activated" = "󰊪";
+              "deactivated" = "󰓠";
+            };
+          };
           "sway/window" = {
             "all-outputs" = true;
             "offscreen-css" = true;
@@ -102,69 +107,94 @@ in
             tooltip = false;
           };
           clock = {
-            format = "<span font='13'>{:%H:%M:%S}</span>";
+            format = "{:%H:%M:%S}";
             "tooltip-format" = "{:%A, %B %d, %Y | %H:%M %Z}";
             "on-click" = "galendae";
+            "interval" = 1;
           };
           backlight = {
-            format = "󰃠{icon}";
+            format = "{icon}";
             tooltip = true;
             "tooltip-format" = "{percent}%";
             "format-icons" = [
-              "󰣾"
-              "󰣴"
-              "󰣶"
-              "󰣸"
-              "󰣺"
+              "󰛩"
+              "󱩎"
+              "󱩏"
+              "󱩐"
+              "󱩑"
+              "󱩒"
+              "󱩓"
+              "󱩔"
+              "󱩕"
+              "󱩖"
+              "󰛨"
             ];
           };
-          battery = {
-            states = {
-              warning = 30;
-              critical = 15;
+          "battery" = {
+            "interval" = 60;
+            "states" = {
+              "warning" = 30;
+              "critical" = 15;
             };
-            format = "{icon}";
-            "tooltip-format" = "{capacity}%  |  {time}";
-            "format-charging" = "{icon}";
-            "format-icons" = [
-              "󰁺"
-              "󰁻"
-              "󰁼"
-              "󰁽"
-              "󰁾"
-              "󰁿"
-              "󰂀"
-              "󰂁"
-              "󰂂"
-              "󰁹"
-            ];
+            "format" = "{icon}";
+            "format-critical" = "󱉞";
+            "format-icons" = {
+              "default" = [
+                "󰂎"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
+              ];
+              "charging" = [
+                "󰢟"
+                "󰢜"
+                "󰂆"
+                "󰂇"
+                "󰂈"
+                "󰢝"
+                "󰂉"
+                "󰢞"
+                "󰂊"
+                "󰂋"
+                "󰂅"
+              ];
+              "plugged" = "󱈑";
+            };
           };
           network = {
-            format = "󰖩{icon}";
+            format = "{icon}";
             "tooltip-format" = "{essid}  |  {ipaddr}  |  {ifname}";
             "format-icons" = [
-              "󰣾"
-              "󰣴"
-              "󰣶"
-              "󰣸"
-              "󰣺"
+              "󰤯"
+              "󰤟"
+              "󰤢"
+              "󰤥"
+              "󰤨"
             ];
             "on-click-right" = "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
-            "format-disconnected" = "󰖩󰣽";
+            "format-disconnected" = "󰤭";
           };
-          pulseaudio = {
-            format = "󰕾{icon}";
+          "pulseaudio" = {
+            "tooltip" = true;
             "tooltip-format" = "{volume}%";
-            "format-muted" = "󰖁{icon}";
+            "scroll-step" = 5;
+            "format" = "{icon}";
+            "format-bluetooth" = "󰂰";
+            "format-muted" = "󰖁";
             "format-icons" = {
-              default = [
-                "󰣾"
-                "󰣴"
-                "󰣶"
-                "󰣸"
-                "󰣺"
+              "default" = [
+                ""
+                ""
+                ""
               ];
             };
+            "on-click" = "pavucontrol";
             "enable-bar-scroll" = true;
           };
         };
