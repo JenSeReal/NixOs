@@ -75,7 +75,7 @@
   };
 
   outputs =
-    inputs:
+    { self, ... }@inputs:
     let
       inherit inputs;
 
@@ -128,7 +128,17 @@
           ];
         };
       };
+
+      templates = {
+        default = {
+          path = ./templates/default;
+          description = "A very basic flake for dev environments";
+        };
+      };
+
+      defaultTemplate = self.templates.default;
     };
+
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
