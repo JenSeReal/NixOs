@@ -4,7 +4,8 @@ with lib.JenSeReal;
 let
 
   cfg = config.JenSeReal.desktop-environment.hyprland;
-in {
+in
+{
   options.JenSeReal.desktop-environment.hyprland = {
     enable = mkEnableOption "Hyprland.";
   };
@@ -28,13 +29,14 @@ in {
       launchers.kickoff.enable = true;
       launchers.anyrun.enable = true;
       notifications.mako.enable = true;
-      idle-managers.swayidle.enable = true;
-      screen-lockers.swaylock-effects.enable = true;
-      terminal-emulator.kitty.enable = true;
+      idle-manager.swayidle.enable = true;
+      screen-locker.swaylock-effects.enable = true;
       layout-manager.kanshi.enable = true;
       layout-manager.way-displays.enable = true;
       # library.qt.enable = true;
     };
-    JenSeReal.gui.browser.firefox.enable = true;
+    JenSeReal.programs.gui.browser.firefox.enable = true;
+    JenSeReal.programs.gui.terminal-emulator.kitty.enable = true;
+
   };
 }

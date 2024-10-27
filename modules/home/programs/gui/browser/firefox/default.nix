@@ -7,7 +7,7 @@
 with lib;
 with lib.JenSeReal;
 let
-  cfg = config.JenSeReal.gui.programs.browser.firefox;
+  cfg = config.JenSeReal.programs.gui.browser.firefox;
   defaultSettings = {
     "accessibility.typeaheadfind.enablesound" = false;
     "accessibility.typeaheadfind.flashBar" = 0;
@@ -66,7 +66,7 @@ let
   };
 in
 {
-  options.JenSeReal.gui.programs.browser.firefox = with types; {
+  options.JenSeReal.programs.gui.browser.firefox = with types; {
     enable = mkEnableOption "Whether or not to enable firefox.";
     extraConfig = mkOpt str "" "Extra configuration for the user profile JS file.";
     settings = mkOpt attrs defaultSettings "Settings to apply to the profile.";
