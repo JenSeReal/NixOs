@@ -1,17 +1,29 @@
-{ config, pkgs, lib, ... }:
-with lib;
-with lib.JenSeReal;
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let cfg = config.JenSeReal.system.fonts;
-in {
+let
+  inherit (lib) mkIf;
+
+  cfg = config.JenSeReal.system.fonts;
+in
+{
   imports = [ ../../../shared/system/fonts/default.nix ];
 
   config = mkIf cfg.enable {
     default = {
-      fonts = with pkgs;
-        [ sketchybar-app-font ] ++ cfg.default ++ cfg.additional;
+      fonts = [ pkgs.sketchybar-app-font ] ++ cfg.default ++ cfg.additional;
     };
 
-    system = { defaults = { NSGlobalDomain = { AppleFontSmoothing = 1; }; }; };
+    system = {
+      defaults = {
+        NSGlobalDomain = {
+          AppleFontSmoothing = 1;
+        };
+      };
+    };
   };
 }

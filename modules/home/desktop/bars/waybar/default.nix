@@ -207,3 +207,29 @@ in
     };
   };
 }
+
+# config = mkIf cfg.enable {
+#     programs.waybar = {
+#       enable = true;
+#       settings = {
+#         mainBar = {
+#           clock = { format = "{:%Y-%m-%d %H:%M}"; };
+#           layer = "top";
+#           position = "bottom";
+#           modules-left = [ "hyprland/workspaces" ];
+#           modules-right = [
+#             "hyprland/submap"
+#             "idle_inhibitor"
+#             "pulseaudio"
+#             "network"
+#             "cpu"
+#             "memory"
+#             "temperature"
+#             "tray"
+#             "battery"
+#             "clock"
+#           ];
+#         };
+#       };
+#     };
+#   };

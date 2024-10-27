@@ -1,6 +1,13 @@
-{ lib, config, ... }:
-with lib;
-with lib.JenSeReal;
+{
+  lib,
+  config,
+  namespace,
+  pkgs,
+  ...
+}:
+let
+  inherit (lib.${namespace}) enabled;
+in
 {
   JenSeReal = {
     desktop = {
@@ -31,6 +38,12 @@ with lib.JenSeReal;
   sops.secrets."ssh/jfp.one" = {
     sopsFile = ./secrets/ssh.yml;
     path = "${config.home.homeDirectory}/.ssh/hosts/jfp.one";
+  };
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = lib.mkForce pkgs.phinger-cursors;
+    name = lib.mkForce "phinger-cursors-light";
   };
 
   nix.extraOptions = "";

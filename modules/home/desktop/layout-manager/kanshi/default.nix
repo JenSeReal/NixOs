@@ -59,7 +59,7 @@ in
             (
               msi
               // {
-                position = "${toString ((builtins.floor (2256 / laptop.scale)) + ((2560 - 2256) / 2))},0";
+                position = "${toString ((builtins.floor (2256 / laptop.scale)) + ((2560 - 1920) / 2))},0";
               }
             )
           ];

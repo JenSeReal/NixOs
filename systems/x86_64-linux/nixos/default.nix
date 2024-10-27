@@ -77,6 +77,7 @@ in
     ffmpeg-full
     fzf
     gimp-with-plugins
+    gifski
     gnome.nautilus
     hunspell
     hunspellDicts.de_DE

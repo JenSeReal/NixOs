@@ -9,7 +9,7 @@ let
   cfg = config.${namespace}.desktop.window-manager.sway;
 
   inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) mkStrOpt enabled;
+  inherit (lib.${namespace}) mkStrOpt;
 
   workspaces = builtins.concatStringsSep "\n" (
     builtins.concatLists (
@@ -71,6 +71,8 @@ in
         export XDG_CURRENT_DESKTOP=sway
       '';
     };
+
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     xdg = {
       portal = {
@@ -172,5 +174,7 @@ in
       };
     };
     services.libinput.enable = true;
+    programs.dconf.enable = true;
+    services.dbus.enable = true;
   };
 }

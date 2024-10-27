@@ -83,7 +83,6 @@ in
               class = "^Firefox$";
             };
           }
-
         ];
       };
     };
