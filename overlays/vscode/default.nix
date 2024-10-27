@@ -1,2 +1,1 @@
-{ channels, ... }: final: prev: { inherit (channels.unstable) vscode; }
-
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) vscode; }

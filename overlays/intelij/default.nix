@@ -1,3 +1,2 @@
-{channels, ...}: final: prev: {
-  inherit (channels.unstable) "jetbrains.idea-community-bin";
-}
+{ channels, ... }:
+final: prev: { inherit (channels.nixpkgs-unstable) "jetbrains.idea-community-bin"; }

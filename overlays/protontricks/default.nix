@@ -1,1 +1,1 @@
-{ channels, ... }: final: prev: { inherit (channels.unstable) protontricks; }
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) protontricks; }

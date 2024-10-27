@@ -1,1 +1,1 @@
-{ channels, ... }: final: prev: { inherit (channels.unstable) lutris; }
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) lutris; }

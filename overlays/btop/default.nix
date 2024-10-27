@@ -1,1 +1,1 @@
-{ channels, ... }: final: prev: { inherit (channels.unstable) btop; }
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) btop; }

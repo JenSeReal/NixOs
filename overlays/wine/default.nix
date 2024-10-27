@@ -1,5 +1,1 @@
-{ channels, ... }:
-final: prev: {
-  inherit (channels.unstable) wine wineWowPackages;
-}
-
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) wine wineWowPackages; }

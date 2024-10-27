@@ -1,1 +1,1 @@
-{ channels, ... }: final: prev: { inherit (channels.unstable) winetricks; }
+{ channels, ... }: final: prev: { inherit (channels.nixpkgs-unstable) winetricks; }
