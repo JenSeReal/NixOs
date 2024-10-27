@@ -1,6 +1,9 @@
 { lib, ... }:
 
-with lib;
+let
+  inherit (lib) mkOption types;
+in
+
 rec {
   ## Create a NixOS module option.
   ##
@@ -79,4 +82,14 @@ rec {
     #@ false
     enable = false;
   };
+
+  mkNullOrBoolOption =
+    args:
+    mkOption (
+      args
+      // {
+        type = types.nullOr types.bool;
+        default = null;
+      }
+    );
 }

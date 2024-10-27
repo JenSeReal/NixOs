@@ -1,12 +1,20 @@
-{ options, config, lib, ... }:
+{
+  options,
+  config,
+  lib,
+  namespace,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal; {
-  options.JenSeReal.home = with types; {
-    file = mkOpt attrs { }
-      "A set of files to be managed by home-manager's `home.file`.";
-    configFile = mkOpt attrs { }
-      "A set of files to be managed by home-manager's `xdg.configFile`.";
+let
+  inherit (lib) types mkAliasDefinitions;
+  inherit (lib.${namespace}) mkOpt;
+  inherit (types) attrs;
+in
+{
+  options.JenSeReal.home = {
+    file = mkOpt attrs { } "A set of files to be managed by home-manager's `home.file`.";
+    configFile = mkOpt attrs { } "A set of files to be managed by home-manager's `xdg.configFile`.";
     extraOptions = mkOpt attrs { } "Options to pass directly to home-manager.";
   };
 
@@ -22,8 +30,7 @@ with lib.JenSeReal; {
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${config.JenSeReal.user.name} =
-        mkAliasDefinitions options.JenSeReal.home.extraOptions;
+      users.${config.JenSeReal.user.name} = mkAliasDefinitions options.JenSeReal.home.extraOptions;
     };
   };
 }

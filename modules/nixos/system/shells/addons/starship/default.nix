@@ -1,13 +1,18 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.system.shells.addons.starship;
-in {
-  options.JenSeReal.system.shells.addons.starship = with types; {
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.JenSeReal.system.shells.addons.starship;
+in
+{
+  options.JenSeReal.system.shells.addons.starship = {
     enable = mkEnableOption "Whether or not to use fish as a shell.";
   };
 
-  config =
-    mkIf cfg.enable { environment.systemPackages = with pkgs; [ starship ]; };
+  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ starship ]; };
 }

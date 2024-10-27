@@ -6,9 +6,9 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (lib.types) listOf package;
-  inherit (lib.${namespace}) enabled mkOpt mkBoolOpt;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.JenSeReal.system.font;
   default = with pkgs; [
@@ -26,15 +26,14 @@ let
 in
 {
   options.JenSeReal.system.font = {
-    enable = mkBoolOpt false "Whether or not to manage fonts.";
-    default = mkOpt (listOf package) default "The default fonts to install";
-    additional = mkOpt (listOf package) [ ] "Custom font packages to install.";
+    enable = mkEnableOption "Whether or not to manage fonts.";
+    additionalFonts = mkOpt (listOf package) [ ] "Custom font packages to install.";
   };
 
   config = mkIf cfg.enable {
     environment.variables = {
       LOG_ICONS = "true";
     };
-    fonts.fontDir = enabled;
+    fonts.packages = default ++ cfg.additionalFonts;
   };
 }

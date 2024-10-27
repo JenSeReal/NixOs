@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.system.shells.nushell;
-in {
-  options.JenSeReal.system.shells.nushell = with types; {
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.JenSeReal.system.shells.nushell;
+in
+{
+  options.JenSeReal.system.shells.nushell = {
     enable = mkEnableOption "Whether or not to use nuhsell as a shell.";
   };
 

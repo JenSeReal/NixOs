@@ -1,27 +1,35 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  namespace,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.system.locale;
-in {
-  options.JenSeReal.system.locale = with types; {
+let
+  inherit (lib) mkIf types mkEnableOption;
+  inherit (lib.${namespace}) mkOpt;
+  inherit (types) str;
+  cfg = config.JenSeReal.system.locale;
+in
+{
+  options.JenSeReal.system.locale = {
     enable = mkEnableOption "Whether or not to use the variables set.";
-    default_locale = mkOpt str "en_US.UTF-8" "The language to use";
-    extra_locale = mkOpt str "de_DE.UTF-8" "The locale to use";
+    defaultLocale = mkOpt str "en_US.UTF-8" "The language to use";
+    extraLocale = mkOpt str "de_DE.UTF-8" "The locale to use";
   };
 
   config = mkIf cfg.enable {
     i18n.extraLocaleSettings = {
-      defaultLocale = cfg.default_locale;
-      LC_ADDRESS = cfg.extra_locale;
-      LC_IDENTIFICATION = cfg.extra_locale;
-      LC_MEASUREMENT = cfg.extra_locale;
-      LC_MONETARY = cfg.extra_locale;
-      LC_NAME = cfg.extra_locale;
-      LC_NUMERIC = cfg.extra_locale;
-      LC_PAPER = cfg.extra_locale;
-      LC_TELEPHONE = cfg.extra_locale;
-      LC_TIME = cfg.extra_locale;
+      defaultLocale = cfg.defaultLocale;
+      LC_ADDRESS = cfg.extraLocale;
+      LC_IDENTIFICATION = cfg.extraLocale;
+      LC_MEASUREMENT = cfg.extraLocale;
+      LC_MONETARY = cfg.extraLocale;
+      LC_NAME = cfg.extraLocale;
+      LC_NUMERIC = cfg.extraLocale;
+      LC_PAPER = cfg.extraLocale;
+      LC_TELEPHONE = cfg.extraLocale;
+      LC_TIME = cfg.extraLocale;
     };
   };
 }

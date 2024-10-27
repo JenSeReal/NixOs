@@ -4,15 +4,21 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur.url = "github:nix-community/NUR";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
+
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     fw-ectool = {
       url = "github:tlvince/ectool.nix";
@@ -39,6 +45,7 @@
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     snowfall-lib = {
       url = "github:snowfallorg/lib";
@@ -60,8 +67,10 @@
     nuenv.url = "github:DeterminateSystems/nuenv";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
-    anyrun.url = "github:Kirottu/anyrun";
-    anyrun.inputs.nixpkgs.follows = "nixpkgs";
+    anyrun = {
+      url = "github:Kirottu/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     typst-live.url = "github:ItsEthra/typst-live";
 
@@ -72,6 +81,8 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix.url = "github:danth/stylix/release-24.05";
   };
 
   outputs =
@@ -112,6 +123,7 @@
           darwin = with inputs; [
             home-manager.darwinModules.home-manager
             nixvim.nixDarwinModules.nixvim
+            stylix.darwinModules.stylix
           ];
 
           home = with inputs; [
@@ -119,12 +131,15 @@
             nixvim.homeManagerModules.nixvim
             sops-nix.homeManagerModules.sops
             vscode-server.homeModules.default
+            stylix.homeManagerModules.stylix
           ];
 
           nixos = with inputs; [
+            home-manager.nixosModules.home-manager
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             vscode-server.nixosModules.default
+            stylix.nixosModules.stylix
           ];
         };
       };

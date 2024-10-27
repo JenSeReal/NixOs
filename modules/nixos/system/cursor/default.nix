@@ -1,8 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  namespace,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal;
 let
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.types) listOf package;
+  inherit (lib.${namespace}) mkOpt;
   cfg = config.JenSeReal.system.cursor;
 
   default = with pkgs; [
@@ -14,13 +21,12 @@ let
     JenSeReal.layan-cursors
   ];
 
-in {
-  options.JenSeReal.system.cursor = with types; {
+in
+{
+  options.JenSeReal.system.cursor = {
     enable = mkEnableOption "Whether or not to enable additional cursors.";
-    additional =
-      mkOpt (listOf package) [ ] "Custom cursor packages to install.";
+    additional = mkOpt (listOf package) [ ] "Custom cursor packages to install.";
   };
 
-  config =
-    mkIf cfg.enable { environment.systemPackages = default ++ cfg.additional; };
+  config = mkIf cfg.enable { environment.systemPackages = default ++ cfg.additional; };
 }

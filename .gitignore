@@ -1,10 +1,5 @@
-result/
 .direnv/
 .devenv/
 **/.DS_Store
 .vscode/
-bare-wrapper
-filtered
-final
-orig
-.config/
+**/*.env

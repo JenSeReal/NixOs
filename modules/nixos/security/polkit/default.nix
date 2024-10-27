@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.security.polkit;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.JenSeReal.security.polkit;
+in
+{
   options.JenSeReal.security.polkit = {
     enable = mkEnableOption "Whether or not to enable polkit.";
   };
@@ -10,7 +16,9 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ libsForQt5.polkit-kde-agent ];
 
-    security.polkit = { enable = true; };
+    security.polkit = {
+      enable = true;
+    };
 
     systemd = {
       user.services.polkit-kde-authentication-agent-1 = {
@@ -20,8 +28,7 @@ in {
         wants = [ "graphical-session.target" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart =
-            "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+          ExecStart = "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
           Restart = "on-failure";
           RestartSec = 1;
           TimeoutStopSec = 10;

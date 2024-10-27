@@ -1,25 +1,39 @@
-{ config, lib, pkgs, ... }:
-with lib;
-with lib.JenSeReal;
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 
-let cfg = config.JenSeReal.system.boot;
-in {
-  options.JenSeReal.system.boot = {
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.${namespace}.system.boot;
+in
+{
+  options.${namespace}.system.boot = {
     enable = mkEnableOption "Whether or not to enable booting.";
     plymouth = mkEnableOption "Whether or not to enable plymouth boot splash.";
-    secure-boot = mkEnableOption "Whether or not to enable secure boot.";
+    secureBoot = mkEnableOption "Whether or not to enable secure boot.";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [ efibootmgr efitools efivar fwupd ]
-      ++ lib.optionals cfg.secure-boot [ sbctl ];
+    environment.systemPackages = [
+      pkgs.efibootmgr
+      pkgs.efitools
+      pkgs.efivar
+      pkgs.fwupd
+    ] ++ lib.optionals cfg.secureBoot [ pkgs.sbctl ];
 
     boot = {
       bootspec.enable = true;
       consoleLogLevel = 0;
       initrd.verbose = false;
-      supportedFilesystems = [ "btrfs" "ntfs" "fat32" ];
+      supportedFilesystems = [
+        "btrfs"
+        "ntfs"
+        "fat32"
+      ];
       kernelPackages = pkgs.linuxPackages_latest;
       kernelParams = lib.optionals cfg.plymouth [
         "quiet"
@@ -29,7 +43,7 @@ in {
         "boot.shell_on_fail"
       ];
 
-      lanzaboote = mkIf cfg.secure-boot {
+      lanzaboote = mkIf cfg.secureBoot {
         enable = true;
         pkiBundle = "/etc/secureboot";
       };
@@ -41,13 +55,13 @@ in {
         };
 
         systemd-boot = {
-          enable = !cfg.secure-boot;
+          enable = !cfg.secureBoot;
           configurationLimit = 20;
           editor = false;
         };
       };
 
-      plymouth = mkIf cfg.secure-boot {
+      plymouth = mkIf cfg.secureBoot {
         enable = true;
         theme = "catppuccin-macchiato";
         themePackages = [ pkgs.catppuccin-plymouth ];

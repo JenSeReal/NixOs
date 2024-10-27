@@ -1,5 +1,10 @@
 { pkgs, inputs, ... }:
 
+let
+  setupScript = pkgs.writeShellScriptBin "setup-env" ''
+    [ ! -f .env ] || export $(grep -v '^#' .env | xargs);
+  '';
+in
 inputs.devenv.lib.mkShell {
   inherit inputs pkgs;
 
@@ -16,7 +21,6 @@ inputs.devenv.lib.mkShell {
       packages =
         with pkgs;
         [
-          deadnix
           hydra-check
           nix-diff
           nix-index
@@ -26,7 +30,6 @@ inputs.devenv.lib.mkShell {
           nixpkgs-lint
           snowfallorg.flake
           snowfallorg.frost
-          statix
           biome
         ]
         ++ lib.optionals stdenv.isDarwin (
@@ -39,36 +42,7 @@ inputs.devenv.lib.mkShell {
           ]
         );
 
-      enterShell = ''
-        [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
-      '';
+      enterShell = "${setupScript}/bin/setup-env";
     }
   ];
 }
-
-# { pkgs, mkShell, ... }:
-
-# mkShell {
-#   name = "Default nix devShell";
-#   buildInputs = with pkgs; [
-#     deadnix
-#     hydra-check
-#     nix-diff
-#     nix-index
-#     nix-prefetch-git
-#     nil
-#     nixd
-#     nixfmt-rfc-style
-#     nixpkgs-fmt
-#     nixpkgs-hammering
-#     nixpkgs-lint
-#     snowfallorg.flake
-#     snowfallorg.frost
-#     statix
-#     biome
-#   ];
-
-#   shellHook = ''
-#     echo Welcome to nix!
-#   '';
-# }

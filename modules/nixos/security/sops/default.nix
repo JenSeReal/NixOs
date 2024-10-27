@@ -1,17 +1,29 @@
-{ config, lib, pkgs, ... }:
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.security.sops;
-in {
-  options.JenSeReal.security.sops = with types; {
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
+let
+  inherit (lib) mkEnableOption mkIf types;
+  inherit (lib.${namespace}) mkOpt;
+  inherit (types) path listOf;
+  cfg = config.JenSeReal.security.sops;
+in
+{
+  options.JenSeReal.security.sops = {
     enable = mkEnableOption "Whether to enable sops.";
     defaultSopsFile = mkOpt path null "Default sops file.";
-    sshKeyPaths = mkOpt (listOf path) [ "/etc/ssh/ssh_host_ed25519_key" ]
-      "SSH Key paths to use.";
+    sshKeyPaths = mkOpt (listOf path) [ "/etc/ssh/ssh_host_ed25519_key" ] "SSH Key paths to use.";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ age sops ssh-to-age ];
+    environment.systemPackages = with pkgs; [
+      age
+      sops
+      ssh-to-age
+    ];
 
     sops = {
       inherit (cfg) defaultSopsFile;

@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.system.shells.fish;
-in {
-  options.JenSeReal.system.shells.fish = with types; {
+let
+  inherit (lib) mkIf mkEnableOption;
+  cfg = config.JenSeReal.system.shells.fish;
+in
+{
+  options.JenSeReal.system.shells.fish = {
     enable = mkEnableOption "Whether or not to use fish as a shell.";
   };
 

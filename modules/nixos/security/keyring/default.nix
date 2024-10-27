@@ -1,11 +1,15 @@
 { config, lib, ... }:
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.security.keyring;
-in {
+let
+  inherit (lib) mkEnableOption mkIf;
+  cfg = config.JenSeReal.security.keyring;
+in
+{
   options.JenSeReal.security.keyring = {
     enable = mkEnableOption "Whether to enable gnome keyring.";
   };
 
-  config = mkIf cfg.enable { services.gnome.gnome-keyring.enable = true; };
+  config = mkIf cfg.enable {
+    programs.seahorse.enable = true;
+    services.gnome.gnome-keyring.enable = true;
+  };
 }

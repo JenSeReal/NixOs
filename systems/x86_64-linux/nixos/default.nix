@@ -54,8 +54,6 @@ in
     fileSystems = [ "/" ];
   };
 
-  security.pki.certificateFiles = [ ./certs/T-TeleSec_GlobalRoot_Class_2.pem ];
-
   security.pam.services.swaylock = {
     text = ''
       auth sufficient pam_unix.so try_first_pass likeauth nullok
@@ -65,29 +63,42 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    bat
     btop
-    curl
-    direnv
-    nix-direnv
-    fw-ectool
-    webcord
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_US
-    hunspellDicts.de_DE
-    onlyoffice-bin
-    spotify
-    vlc
-    thunderbird
-    eyedropper
+    capitaine-cursors
     codeium
-    networkmanagerapplet
-    yazi
-    gnome.nautilus
+    curl
     davinci-resolve
-    kdePackages.kdenlive
+    delta
+    direnv
+    du-dust
+    eyedropper
+    fd
     ffmpeg-full
-    glaxnimate
+    fzf
+    gimp-with-plugins
+    gnome.nautilus
+    hunspell
+    hunspellDicts.de_DE
+    hunspellDicts.en_US
+    hyprpicker
+    inkscape-with-extensions
+    kdePackages.kdenlive
+    killall
+    lapce
+    libreoffice-qt
+    networkmanagerapplet
+    nix-direnv
+    onlyoffice-bin
+    pciutils
+    ripgrep
+    rm-improved
+    spotify
+    thunderbird
+    vlc
+    webcord
+    yazi
+    zoxide
   ];
   services.gvfs.enable = true;
 
@@ -180,6 +191,7 @@ in
   };
 
   ${namespace} = {
+    theming.stylix = enabled;
     entertainment.gaming = {
       lutris = enabled;
       steam = enabled;
@@ -208,7 +220,7 @@ in
       boot = {
         enable = true;
         plymouth = true;
-        secure-boot = true;
+        secureBoot = true;
       };
       cursor = enabled;
       font = enabled;

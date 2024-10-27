@@ -1,21 +1,42 @@
-{ config, lib, pkgs, ... }:
-with lib;
-with lib.JenSeReal;
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 
-let cfg = config.JenSeReal.hardware.audio.pipewire;
-in {
-  options.JenSeReal.hardware.audio.pipewire = with types; {
+let
+  inherit (lib)
+    types
+    mkEnableOption
+
+    mkIf
+    ;
+  inherit (types) package listOf;
+  inherit (lib.${namespace}) enabled mkOpt;
+  cfg = config.JenSeReal.hardware.audio.pipewire;
+in
+{
+  options.JenSeReal.hardware.audio.pipewire = {
     enable = mkEnableOption "Whether or not to enable pipewire.";
-    extra-packages = mkOpt (listOf package) [ pkgs.qjackctl pkgs.easyeffects ]
-      "Additional packages to install.";
+    extra-packages = mkOpt (listOf package) [
+      pkgs.qjackctl
+      pkgs.easyeffects
+    ] "Additional packages to install.";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [ pulsemixer pavucontrol helvum ] ++ cfg.extra-packages;
+    environment.systemPackages = [
+      pkgs.pulsemixer
+      pkgs.pavucontrol
+      pkgs.helvum
+    ] ++ cfg.extra-packages;
 
     sound = enabled;
-    hardware.pulseaudio = { package = pkgs.pulseaudioFull; };
+    hardware.pulseaudio = {
+      package = pkgs.pulseaudioFull;
+    };
     security.rtkit = enabled;
 
     services.pipewire = {

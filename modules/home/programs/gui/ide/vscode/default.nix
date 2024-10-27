@@ -223,7 +223,10 @@ in
         extensions.mathiasfrohlich.kotlin
         extensions.esafirm.kotlin-formatter
         extensions.nvarner.typst-lsp
-        extensions.mgt19937.typst-preview
+        extensions.myriad-dreamin.tinymist
+        extensions.hashicorp.terraform
+        extensions.mgtrrz.terraform-completer
+
       ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [ ];
 
       keybindings = [ ];
