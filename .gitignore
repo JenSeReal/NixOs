@@ -1,0 +1,5 @@
+.direnv/
+.devenv/
+**/.DS_Store
+.vscode/
+**/*.env
