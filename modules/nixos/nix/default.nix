@@ -1,11 +1,13 @@
 { config, lib, ... }:
 
-with lib;
-with lib.JenSeReal;
-let cfg = config.JenSeReal.nix;
+let
+  inherit (lib) mkEnableOption mkIf;
 
-in {
-  options.JenSeReal.nix = with types; {
+  cfg = config.JenSeReal.nix;
+
+in
+{
+  options.JenSeReal.nix = {
     enable = mkEnableOption "Whether or not to enable additional cursors.";
   };
 
@@ -15,14 +17,19 @@ in {
         warn-dirty = false
       '';
       gc = {
-        automatic = true;
         dates = "weekly";
-        options = "--delete-older-than 2d";
       };
-      optimise.automatic = true;
+
+      optimise = {
+        automatic = true;
+        dates = [ "weekly" ];
+      };
 
       settings = {
-        experimental-features = [ "nix-command" "flakes" ];
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         trusted-users = [ "@wheel" ];
       };
     };

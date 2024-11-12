@@ -28,8 +28,8 @@ in
     discord
     wget
     jetbrains.idea-community-bin
-    gimp
-    inkscape
+    # gimp
+    # inkscape
     act
     postman
     devenv

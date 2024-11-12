@@ -38,21 +38,18 @@ in
         always-allow-substitutes = true
       '';
       gc = {
-        automatic = true;
         interval = {
-          Day = 7;
-          Hour = 3;
+          Day = 1;
+          Hour = 12;
+          Minute = 0;
         };
-        options = "--delete-older-than 2d";
-        user = config.${namespace}.user.name;
       };
       optimise = {
         interval = {
-          Day = 7;
-          Hour = 4;
+          Day = 1;
+          Hour = 12;
+          Minute = 15;
         };
-
-        user = config.${namespace}.user.name;
       };
     };
   };

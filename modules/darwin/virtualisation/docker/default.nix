@@ -41,7 +41,7 @@ in
       docker-credential-helpers
 
       podman
-      podman-compose
+      # podman-compose
       podman-tui
     ];
 

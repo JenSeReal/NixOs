@@ -58,13 +58,17 @@ in
         gc = {
           automatic = true;
           options = "--delete-older-than 2d";
+          user = config.${namespace}.user.name;
         };
 
         # This will additionally add your inputs to the system's legacy channels
         # Making legacy nix commands consistent as well
         nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
 
-        optimise.automatic = pkgs.stdenv.isLinux;
+        optimise = {
+          automatic = true;
+          user = config.${namespace}.user.name;
+        };
 
         # pin the registry to avoid downloading and evaluating a new nixpkgs version every time
         # this will add each flake input as a registry to make nix3 commands consistent with your flake
@@ -73,7 +77,6 @@ in
         settings = {
           allowed-users = users;
           allow-import-from-derivation = true;
-          auto-optimise-store = true;
           builders-use-substitutes = true;
           experimental-features = [
             "nix-command"
