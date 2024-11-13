@@ -1,6 +1,14 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 let
-  setupScript = pkgs.writeShellScriptBin "setup-env" "\n";
+  setupScript = pkgs.writeShellScriptBin "setup-env" ''
+    [ ! -f .env ] || export $(grep -v '^#' .env | xargs);
+    ${lib.getExe pkgs.biome} start
+  '';
 
   loginScript = pkgs.writeShellScriptBin "login" ''
     IdpCli configure-credentials --role $AWS_ROLE --account $AWS_ACCOUNT &&
@@ -42,16 +50,17 @@ inputs.devenv.lib.mkShell {
       scripts.local-dev.exec = ''${localDevelopment}/bin/local-dev'';
 
       packages =
-        with pkgs;
         [
-          nixd
-          nil
-          nixfmt-rfc-style
-          awscli2
-          ssm-session-manager-plugin
+          pkgs.jemalloc
+          pkgs.biome
+          pkgs.nixd
+          pkgs.nil
+          pkgs.nixfmt-rfc-style
+          pkgs.awscli2
+          pkgs.ssm-session-manager-plugin
         ]
-        ++ lib.optionals stdenv.isDarwin (
-          with darwin.apple_sdk.frameworks;
+        ++ lib.optionals pkgs.stdenv.isDarwin (
+          with pkgs.darwin.apple_sdk.frameworks;
           [
             Cocoa
             CoreFoundation
@@ -60,10 +69,7 @@ inputs.devenv.lib.mkShell {
           ]
         );
 
-      enterShell = ''
-        [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
-        ${setupScript}/bin/setup-env
-      '';
+      enterShell = ''${setupScript}/bin/setup-env'';
     }
   ];
 }

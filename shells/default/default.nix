@@ -1,8 +1,14 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 let
   setupScript = pkgs.writeShellScriptBin "setup-env" ''
     [ ! -f .env ] || export $(grep -v '^#' .env | xargs);
+    ${lib.getExe pkgs.biome} start
   '';
 in
 inputs.devenv.lib.mkShell {
@@ -19,21 +25,21 @@ inputs.devenv.lib.mkShell {
       };
 
       packages =
-        with pkgs;
         [
-          hydra-check
-          nix-diff
-          nix-index
-          nix-prefetch-git
-          nixfmt-rfc-style
-          nixpkgs-hammering
-          nixpkgs-lint
-          snowfallorg.flake
-          snowfallorg.frost
-          biome
+          pkgs.hydra-check
+          pkgs.nix-diff
+          pkgs.nix-index
+          pkgs.nix-prefetch-git
+          pkgs.nixfmt-rfc-style
+          pkgs.nixpkgs-hammering
+          pkgs.nixpkgs-lint
+          pkgs.snowfallorg.flake
+          pkgs.snowfallorg.frost
+          pkgs.jemalloc
+          pkgs.biome
         ]
-        ++ lib.optionals stdenv.isDarwin (
-          with darwin.apple_sdk.frameworks;
+        ++ lib.optionals pkgs.stdenv.isDarwin (
+          with pkgs.darwin.apple_sdk.frameworks;
           [
             Cocoa
             CoreFoundation

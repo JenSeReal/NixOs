@@ -56,7 +56,7 @@ in
           "editor.defaultFormatter" = "vscode.css-language-features";
         };
 
-        "[javascript][javascriptreact][typescript]" = {
+        "[javascript][javascriptreact][typescript][typescriptreact]" = {
           "editor.defaultFormatter" = "biomejs.biome";
           "editor.tabSize" = 2;
           "editor.insertSpaces" = true;
