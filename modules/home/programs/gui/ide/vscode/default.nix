@@ -235,7 +235,6 @@ in
         extensions.richardwillis.vscode-spotless-gradle
         extensions.mathiasfrohlich.kotlin
         extensions.esafirm.kotlin-formatter
-        extensions.nvarner.typst-lsp
         extensions.myriad-dreamin.tinymist
         extensions.hashicorp.terraform
         extensions.mgtrrz.terraform-completer
