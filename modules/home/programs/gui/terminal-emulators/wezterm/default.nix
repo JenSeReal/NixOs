@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkIf mkEnableOption;
 
@@ -14,73 +19,87 @@ in
     programs.wezterm = {
       enable = true;
       extraConfig = ''
+        -- Pull in the wezterm API
         local wezterm = require 'wezterm'
 
-        return {
-          -- The color scheme
-          colors = {
-            foreground = "#ffffff",
-            background = "#2b213a",
-            cursor_bg = "#ffffff",
-            cursor_border = "#ffffff",
-            cursor_fg = "#2b213a",
-            selection_bg = "#5a5a5a",
-            selection_fg = "none",
-            ansi = {"#2b213a", "#ff5370", "#29d398", "#ffd866", "#02EDF9", "#FF7DDA", "#02EDF9", "#ffffff"},
-            brights = {"#755390", "#ff637f", "#3FDAA4", "#ffeb85", "#3FC4DE", "#F075B7", "#6BE4E6", "#f8f8f2"},
-            scrollbar_thumb = "#5a5a5a",
-            split = "#5a5a5a",
-            tab_bar = {
-              background = "#2b213a",
-              active_tab = {
-                bg_color = "#ff5370",
-                fg_color = "#ffffff",
-              },
-              inactive_tab = {
-                bg_color = "#2b213a",
-                fg_color = "#755390",
-              },
-              inactive_tab_hover = {
-                bg_color = "#2b213a",
-                fg_color = "#755390",
-              },
-              new_tab = {
-                bg_color = "#2b213a",
-                fg_color = "#ffffff",
-              },
-              new_tab_hover = {
-                bg_color = "#2b213a",
-                fg_color = "#ffffff",
-                italic = true,
-              },
-            },
-          },
+        -- This will hold the configuration.
+        local config = wezterm.config_builder()
 
-          -- URL highlight color
-          hyperlink_rules = {
-            {
-              regex = "\\b\\w+://[\\w.-]+\\S*\\b",
-              format = "$0",
-            },
-          },
-
-          -- Window and Tab settings
-          enable_tab_bar = true,
-          hide_tab_bar_if_only_one_tab = true,
-          window_padding = {
-            left = 10,
-            right = 10,
-            top = 10,
-            bottom = 10,
-          },
-          window_background_opacity = 1.0,
-          text_background_opacity = 1.0,
-          inactive_pane_hsb = {
-            saturation = 0.9,
-            brightness = 0.7,
-          },
-          default_cursor_style = 'SteadyBar',
+        ${
+          if pkgs.stdenv.isDarwin then
+            ''
+              -- Fix option key being broken
+              config.send_composed_key_when_left_alt_is_pressed = true
+            ''
+          else
+            ""
         }
+
+        -- The color scheme
+        config.colors = {
+          foreground = "#ffffff",
+          background = "#2b213a",
+          cursor_bg = "#ffffff",
+          cursor_border = "#ffffff",
+          cursor_fg = "#2b213a",
+          selection_bg = "#5a5a5a",
+          selection_fg = "none",
+          ansi = {"#2b213a", "#ff5370", "#29d398", "#ffd866", "#02EDF9", "#FF7DDA", "#02EDF9", "#ffffff"},
+          brights = {"#755390", "#ff637f", "#3FDAA4", "#ffeb85", "#3FC4DE", "#F075B7", "#6BE4E6", "#f8f8f2"},
+          scrollbar_thumb = "#5a5a5a",
+          split = "#5a5a5a",
+          tab_bar = {
+            background = "#2b213a",
+            active_tab = {
+              bg_color = "#ff5370",
+              fg_color = "#ffffff",
+            },
+            inactive_tab = {
+              bg_color = "#2b213a",
+              fg_color = "#755390",
+            },
+            inactive_tab_hover = {
+              bg_color = "#2b213a",
+              fg_color = "#755390",
+            },
+            new_tab = {
+              bg_color = "#2b213a",
+              fg_color = "#ffffff",
+            },
+            new_tab_hover = {
+              bg_color = "#2b213a",
+              fg_color = "#ffffff",
+              italic = true,
+            },
+          },
+        }
+
+        -- URL highlight color
+        config.hyperlink_rules = {
+          {
+            regex = "\\b\\w+://[\\w.-]+\\S*\\b",
+            format = "$0",
+          },
+        }
+
+        -- Window and Tab settings
+        config.enable_tab_bar = true
+        config.hide_tab_bar_if_only_one_tab = true
+        config.window_padding = {
+          left = 10,
+          right = 10,
+          top = 10,
+          bottom = 10,
+        }
+        config.window_background_opacity = 1.0
+        config.text_background_opacity = 1.0
+        config.inactive_pane_hsb = {
+          saturation = 0.9,
+          brightness = 0.7,
+        }
+        config.default_cursor_style = 'SteadyBar'
+
+        return config
       '';
     };
   };

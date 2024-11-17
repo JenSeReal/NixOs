@@ -19,6 +19,16 @@ in
     path = "${config.home.homeDirectory}/.ssh/includes/ssh-config-jfp-one";
   };
 
+  age.secrets.git-config-include-identity-nt = {
+    file = ./secrets/git-config-include-identity-nt.age;
+    path = "${config.home.homeDirectory}/.config/git/includes/gitconfig-include-identity-nt";
+  };
+
+  age.secrets.git-config-include-identity-mb = {
+    file = ./secrets/git-config-include-identity-mb.age;
+    path = "${config.home.homeDirectory}/.config/git/includes/gitconfig-include-identity-mb";
+  };
+
   programs.zsh = {
     enable = true;
 
@@ -43,7 +53,19 @@ in
         direnv = enabled;
         eza = enabled;
         fzf = enabled;
-        git = enabled;
+        git = {
+          enable = true;
+          includes = [
+            {
+              path = config.age.secrets.git-config-include-identity-mb.path;
+              condition = "hasconfig:remote.*.url:git@git.i.mercedes-benz.com:*/**";
+            }
+            {
+              path = config.age.secrets.git-config-include-identity-nt.path;
+              condition = "hasconfig:remote.*.url:git@github.com:novatecconsulting/**";
+            }
+          ];
+        };
         ripgrep = enabled;
         ssh = {
           enable = true;

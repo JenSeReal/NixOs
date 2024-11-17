@@ -10,4 +10,12 @@ in
     jpl
     macOS
   ];
+  "homes/aarch64-darwin/jpl@NB230305JPL/secrets/git-config-include-identity-mb.age".publicKeys = [
+    jpl
+    macOS
+  ];
+  "homes/aarch64-darwin/jpl@NB230305JPL/secrets/git-config-include-identity-nt.age".publicKeys = [
+    jpl
+    macOS
+  ];
 }
