@@ -28,7 +28,7 @@ inputs.devenv.lib.mkShell {
 
       languages = {
         javascript.enable = true;
-        javascript.package = pkgs.nodePackages_latest.nodejs;
+        javascript.package = pkgs.nodejs-slim_22;
         javascript.pnpm.enable = true;
         javascript.yarn.enable = true;
         typescript.enable = true;

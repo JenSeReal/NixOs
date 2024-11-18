@@ -2,12 +2,15 @@
   lib,
   namespace,
   pkgs,
+  inputs,
   ...
 }:
 let
   inherit (lib.${namespace}) enabled;
 in
 {
+  imports = [ inputs.ragenix.darwinModules.default ];
+
   environment.systemPackages = with pkgs; [
     vscode
     git
