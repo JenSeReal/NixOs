@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   lib,
+  channels,
   ...
 }:
 let
@@ -20,7 +21,9 @@ let
   '';
 in
 inputs.devenv.lib.mkShell {
-  inherit inputs pkgs;
+  inherit inputs;
+  pkgs = channels.nixpkgs-unstable;
+
   modules = [
     {
       name = "Xentry E2E-Monitoring development shell";
@@ -28,10 +31,13 @@ inputs.devenv.lib.mkShell {
 
       languages = {
         javascript.enable = true;
-        javascript.package = pkgs.nodejs-slim_22;
+        javascript.package = channels.nixpkgs-unstable.nodejs-slim_23;
         javascript.pnpm.enable = true;
         javascript.yarn.enable = true;
         typescript.enable = true;
+
+        terraform.enable = true;
+        opentofu.enable = true;
 
         python = {
           enable = true;
@@ -54,10 +60,24 @@ inputs.devenv.lib.mkShell {
           pkgs.jemalloc
           pkgs.biome
           pkgs.nixd
-          pkgs.nil
           pkgs.nixfmt-rfc-style
           pkgs.awscli2
           pkgs.ssm-session-manager-plugin
+          pkgs.kubernetes-helm
+          pkgs.kubernetes-polaris
+          pkgs.kubernetes-code-generator
+          pkgs.helm-ls
+          pkgs.k9s
+          pkgs.kubectl
+          pkgs.ktop
+          pkgs.kubecolor
+          pkgs.terraformer
+          pkgs.terraforming
+          pkgs.tflint
+          pkgs.kubectx
+          pkgs.kube-linter
+          pkgs.helmfile
+          pkgs.kompose
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin (
           with pkgs.darwin.apple_sdk.frameworks;
