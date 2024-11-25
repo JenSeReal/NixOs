@@ -66,6 +66,7 @@ in
             }
           ];
         };
+        nh = enabled;
         ripgrep = enabled;
         ssh = {
           enable = true;
