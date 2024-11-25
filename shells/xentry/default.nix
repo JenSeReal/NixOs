@@ -64,7 +64,7 @@ inputs.devenv.lib.mkShell {
           pkgs.awscli2
           pkgs.ssm-session-manager-plugin
           pkgs.kubernetes-helm
-          pkgs.kubernetes-polaris
+          # pkgs.kubernetes-polaris
           pkgs.kubernetes-code-generator
           pkgs.helm-ls
           pkgs.k9s
@@ -78,6 +78,7 @@ inputs.devenv.lib.mkShell {
           pkgs.kube-linter
           pkgs.helmfile
           pkgs.kompose
+          pkgs.act
         ]
         ++ lib.optionals pkgs.stdenv.isDarwin (
           with pkgs.darwin.apple_sdk.frameworks;
