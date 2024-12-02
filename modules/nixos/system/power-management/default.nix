@@ -17,10 +17,10 @@ in
 
   config = mkIf cfg.enable {
     services.thermald = enabled;
-    services.auto-cpufreq = enabled;
+    # services.auto-cpufreq = enabled;
     powerManagement = {
       enable = true;
     };
-    hardware.system76.power-daemon = enabled;
+    # hardware.system76.power-daemon = enabled;
   };
 }

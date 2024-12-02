@@ -20,7 +20,7 @@ in
     programs.steam = enabled;
     environment.systemPackages = with pkgs; [
       libgdiplus
-      steamPackages.steamcmd
+      steamcmd
       # steam-tui
 
       wineWowPackages.waylandFull
