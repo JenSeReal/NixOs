@@ -33,7 +33,7 @@ in
       pkgs.helvum
     ] ++ cfg.extra-packages;
 
-    sound = enabled;
+    # sound = enabled;
     hardware.pulseaudio = {
       package = pkgs.pulseaudioFull;
     };

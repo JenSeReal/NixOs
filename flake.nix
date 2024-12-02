@@ -2,11 +2,19 @@
   description = "JenSeReals flake repository";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
+    home-manager = {
+      # url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nur.url = "github:nix-community/NUR";
+
+    # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
@@ -30,13 +38,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ragenix.url = "github:yaxitech/ragenix";
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      # url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nur.url = "github:nix-community/NUR";
 
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
@@ -69,6 +70,8 @@
     nuenv.inputs.nixpkgs.follows = "nixpkgs-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    wezterm.url = "github:wez/wezterm/main?dir=nix";
+    wezterm.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";

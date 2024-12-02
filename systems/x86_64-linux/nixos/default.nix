@@ -78,7 +78,7 @@ in
     fzf
     gimp-with-plugins
     gifski
-    gnome.nautilus
+    nautilus
     hunspell
     hunspellDicts.de_DE
     hunspellDicts.en_US

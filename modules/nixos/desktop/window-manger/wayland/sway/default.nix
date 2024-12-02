@@ -52,7 +52,7 @@ in
         brightnessctl
         glib
         gtk3.out
-        gnome.gnome-control-center
+        gnome-control-center
         tofi
         kickoff
         anyrun
@@ -147,7 +147,7 @@ in
 
     # configuring sway itself (assmung a display manager starts it)
     systemd.user.targets.sway-session = {
-      description = "Sway compositor session";
+      description = "sway compositor session";
       documentation = [ "man:systemd.special(7)" ];
       bindsTo = [ "graphical-session.target" ];
       wants = [ "graphical-session-pre.target" ];
