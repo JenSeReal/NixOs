@@ -12,7 +12,7 @@ let
 in
 {
   options.JenSeReal.security.gnupg = with types; {
-    enable = mkEnableOption "Whether or not to enable additional cursors.";
+    enable = mkEnableOption "Whether or not to enable gnupg.";
   };
 
   config = mkIf cfg.enable {

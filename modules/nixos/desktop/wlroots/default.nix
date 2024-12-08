@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.JenSeReal;
-let cfg = config.JenSeReal.suites.wlroots;
-in {
+let
+  cfg = config.JenSeReal.suites.wlroots;
+in
+{
   options.JenSeReal.suites.wlroots = {
-    enable =
-      mkEnableOption "Whether or not to enable common wlroots configuration.";
+    enable = mkEnableOption "Whether or not to enable common wlroots configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -21,6 +27,7 @@ in {
       brightnessctl
       glib
       gtk3.out
+      gtk4
       playerctl
       libsForQt5.qt5.qtwayland
       qt6.qtwayland

@@ -91,7 +91,7 @@ in
             ""
         }
 
-        config.color_scheme = 'Synthwave84';
+        config.color_scheme = 'Synthwave84'
 
         -- URL highlight color
         config.hyperlink_rules = {

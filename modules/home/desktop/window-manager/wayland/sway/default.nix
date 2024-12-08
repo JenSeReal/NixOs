@@ -11,8 +11,8 @@ let
     getExe
     getExe'
     mkOptionDefault
+    mkEnableOption
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
   cfg = config.${namespace}.desktop.window-manager.wayland.sway;
 
   modifier = config.wayland.windowManager.sway.config.modifier;
@@ -30,22 +30,27 @@ let
 in
 {
   options.${namespace}.desktop.window-manager.wayland.sway = {
-    enable = mkBoolOpt false "Whether or not to enable sway window manager.";
+    enable = mkEnableOption "Whether or not to enable sway window manager.";
   };
 
   config = mkIf cfg.enable {
+    home.sessionVariables = {
+      GSK_RENDERER = "gl";
+    };
+
     wayland.windowManager.sway = {
       enable = true;
       config = {
         modifier = "Mod4";
-        terminal = "${getExe pkgs.wezterm}";
-        menu = "${getExe pkgs.kickoff}";
+        terminal = "${getExe config.programs.wezterm.package}";
+        menu = " ${getExe pkgs.yofi}";
         bars = [ { command = "${getExe pkgs.waybar}"; } ];
         input = {
           "*" = {
             xkb_layout = "de";
             xkb_variant = "nodeadkeys";
             xkb_options = "caps:escape";
+            xkb_numlock = "enabled";
           };
 
           "type:touchpad" = {

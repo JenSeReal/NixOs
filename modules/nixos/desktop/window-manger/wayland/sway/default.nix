@@ -52,6 +52,7 @@ in
         brightnessctl
         glib
         gtk3.out
+        gtk4
         gnome-control-center
         tofi
         kickoff
@@ -69,6 +70,7 @@ in
         export XDG_SESSION_TYPE=wayland
         export XDG_SESSION_DESKTOP=sway
         export XDG_CURRENT_DESKTOP=sway
+        export GSK_RENDERER=gl
       '';
     };
 

@@ -23,6 +23,10 @@ in
 
   #boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
 
+  environment.sessionVariables = {
+    GSK_RENDERER = "gl";
+  };
+
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
@@ -192,7 +196,7 @@ in
   };
 
   ${namespace} = {
-    theming.stylix.enable = false;
+    theming.stylix = enabled;
     programs.gui.entertainment.gaming = {
       lutris = enabled;
       steam = enabled;
@@ -202,6 +206,10 @@ in
       audio.pipewire = enabled;
       bluetooth = enabled;
       opengl = enabled;
+      peripherals.wheels = {
+        logitech.g923 = enabled;
+        moza.r12 = enabled;
+      };
     };
     nix = enabled;
     security = {

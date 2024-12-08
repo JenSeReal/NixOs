@@ -1,4 +1,10 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -10,17 +16,27 @@ in
   };
 
   config = mkIf cfg.enable {
-    # stylix.image = ./2.jpg;
-    # stylix.polarity = "dark";
-    # stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/paraiso.yaml";
+    stylix.image = ./2.jpg;
+    stylix.polarity = "dark";
+    stylix.base16Scheme = ./synthwave84.yaml;
 
-    # stylix.fonts.monospace = with pkgs; {
-    #   name = "Fira Code";
-    #   package = fira-code;
+    # stylix.cursor = with pkgs; {
+    #   package = phinger-cursors;
+    #   name = "phinger-cursors-light";
+    #   size = 32;
     # };
 
-    # stylix.targets.xfce.enable = false;
-    # stylix.targets.vscode.enable = false;
-    # stylix.targets.hyprland.enable = false;
+    stylix.cursor = {
+      package = pkgs.${namespace}.layan-cursors;
+      name = "layan-white-cursors";
+      size = 24;
+    };
+
+    stylix.fonts.monospace = with pkgs; {
+      name = "Fira Code";
+      package = fira-code;
+    };
+
+    stylix.targets.vscode.enable = false;
   };
 }

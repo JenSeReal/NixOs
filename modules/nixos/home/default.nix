@@ -30,6 +30,8 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
 
+      backupFileExtension = "hm.old";
+
       users.${config.JenSeReal.user.name} = mkAliasDefinitions options.JenSeReal.home.extraOptions;
     };
   };

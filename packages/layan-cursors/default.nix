@@ -13,9 +13,9 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -dm 755 $out/share/icons
-    mv dist $out/share/icons/Layan-cursors
-    mv dist-border $out/share/icons/Layan-border-cursors
-    mv dist-white $out/share/icons/Layan-white-cursors
+    mv dist $out/share/icons/layan-cursors
+    mv dist-border $out/share/icons/layan-border-cursors
+    mv dist-white $out/share/icons/layan-white-cursors
   '';
 
   meta = with lib; {

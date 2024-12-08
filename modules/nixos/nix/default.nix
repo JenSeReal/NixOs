@@ -8,7 +8,7 @@ let
 in
 {
   options.JenSeReal.nix = {
-    enable = mkEnableOption "Whether or not to enable additional cursors.";
+    enable = mkEnableOption "Whether or not to enable additional nix config.";
   };
 
   config = mkIf cfg.enable {

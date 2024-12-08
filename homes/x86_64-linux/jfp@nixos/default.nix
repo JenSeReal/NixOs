@@ -34,17 +34,12 @@ in
       gui.ide.vscode = enabled;
     };
     security.sops = enabled;
+    theming.stylix = enabled;
   };
 
   sops.secrets."ssh/jfp.one" = {
     sopsFile = ./secrets/ssh.yml;
     path = "${config.home.homeDirectory}/.ssh/hosts/jfp.one";
-  };
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = lib.mkForce pkgs.phinger-cursors;
-    name = lib.mkForce "phinger-cursors-light";
   };
 
   nix.extraOptions = "";

@@ -63,8 +63,8 @@ in
 
       plymouth = mkIf cfg.secureBoot {
         enable = true;
-        theme = "catppuccin-macchiato";
-        themePackages = [ pkgs.catppuccin-plymouth ];
+        # theme = "catppuccin-macchiato";
+        # themePackages = [ pkgs.catppuccin-plymouth ];
       };
     };
     security.tpm2.enable = true;

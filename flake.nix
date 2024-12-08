@@ -11,7 +11,10 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur.url = "github:nix-community/NUR";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # nixos-hardware.url = "github:NixOS/nixos-hardware/083823b7904e43a4fc1c7229781417e875359a42";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -49,29 +52,27 @@
 
     snowfall-lib = {
       url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     snowfall-frost = {
       url = "github:snowfallorg/frost";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     flake = {
       url = "github:snowfallorg/flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
     devenv.url = "github:cachix/devenv";
     devenv.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    nuenv.url = "github:DeterminateSystems/nuenv";
-    nuenv.inputs.nixpkgs.follows = "nixpkgs-unstable";
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs-unstable";
     wezterm.url = "github:wez/wezterm/main?dir=nix";
-    wezterm.inputs.nixpkgs.follows = "nixpkgs";
+    wezterm.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -88,7 +89,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix.url = "github:danth/stylix/release-24.05";
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
@@ -118,8 +119,7 @@
 
       overlays = with inputs; [
         flake.overlays.default
-        nuenv.overlays.default
-        nur.overlay
+        nur.overlays.default
         snowfall-frost.overlays.default
         rust-overlay.overlays.default
       ];
@@ -141,7 +141,7 @@
             sops-nix.homeManagerModules.sops
             ragenix.homeManagerModules.default
             vscode-server.homeModules.default
-            # stylix.homeManagerModules.stylix
+            stylix.homeManagerModules.stylix
           ];
 
           nixos = with inputs; [
@@ -150,7 +150,7 @@
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
             ragenix.nixosModules.default
-            # stylix.nixosModules.stylix
+            stylix.nixosModules.stylix
           ];
         };
       };
