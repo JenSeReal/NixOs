@@ -50,7 +50,7 @@ in
       members = config.${namespace}.user.name;
     };
 
-    launchd.user.agents.colima.serviceConfig = {
+    launchd.daemons.colima.serviceConfig = {
       Program = "${getExe pkgs.colima}";
       ProgramArguments = [
         "start"
