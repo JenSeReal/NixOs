@@ -64,21 +64,12 @@ in
           "editor.formatOnPaste" = true;
         };
 
-        "[java][gradle]" = {
-          "spotlessGradle.diagnostics.enable" = true;
-          "spotlessGradle.format.enable" = true;
+        "[java][gradle][kotlin][gradle-kotlin-dsl]" = {
           "editor.defaultFormatter" = "richardwillis.vscode-spotless-gradle";
-          "editor.codeActionsOnSave" = {
-            "source.fixAll.spotlessGradle" = "always";
-          };
-        };
-
-        "[kotlin][gradle-kotlin-dsl]" = {
-          "editor.defaultFormatter" = "esafirm.kotlin-formatter";
           "spotlessGradle.diagnostics.enable" = true;
           "spotlessGradle.format.enable" = true;
           "editor.codeActionsOnSave" = {
-            "source.fixAll.spotlessGradle" = "always";
+            "source.fixAll.spotlessGradle" = true;
           };
         };
 
@@ -110,7 +101,8 @@ in
         "css.format.spaceAroundSelectorSeparator" = true;
 
         "editor.bracketPairColorization.enabled" = true;
-        "editor.fontFamily" = lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
+        "editor.fontFamily" =
+          lib.mkDefault "'FiraCode Nerd Font', 'Droid Sans Mono', 'monospace', 'Droid Sans Fallback'";
         "editor.fontLigatures" = true;
         "editor.inlayHints.enabled" = "on";
         "editor.linkedEditing" = true;
@@ -234,7 +226,6 @@ in
         extensions.codeium.codeium
         extensions.richardwillis.vscode-spotless-gradle
         extensions.mathiasfrohlich.kotlin
-        extensions.esafirm.kotlin-formatter
         extensions.myriad-dreamin.tinymist
         extensions.hashicorp.terraform
         extensions.mgtrrz.terraform-completer
