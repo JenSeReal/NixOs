@@ -20,8 +20,8 @@ in
     # hardware.new-lg4ff.enable = true;
 
     boot = {
-      extraModulePackages = [ pkgs.${namespace}.new-lg4ff ];
-      kernelModules = [ "hid-logitech-new" ];
+      # extraModulePackages = [ pkgs.${namespace}.new-lg4ff ];
+      # kernelModules = [ "hid-logitech-new" ];
     };
 
     # Xbox controller driver

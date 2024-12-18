@@ -207,7 +207,7 @@ in
       bluetooth = enabled;
       opengl = enabled;
       peripherals.wheels = {
-        logitech.g923 = enabled;
+        # logitech.g923 = enabled;
         moza.r12 = enabled;
       };
     };

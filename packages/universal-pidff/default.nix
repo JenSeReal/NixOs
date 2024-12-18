@@ -13,8 +13,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "JacKeTUs";
     repo = "universal-pidff";
-    rev = "main";
-    hash = "sha256-BViobWl+9ypTcQJWtZ9pbeU4cmHcFNZWlsmQUOO64Vc=";
+    rev = "23ec6488eddaa9f5b370b53b0198ba7b656ffa3d";
+    hash = "sha256-aA1iRXoVgJ1wVQMxFZm7/GqB7G/IjcLXifAk6B8odCs=";
   };
 
   postPatch = ''

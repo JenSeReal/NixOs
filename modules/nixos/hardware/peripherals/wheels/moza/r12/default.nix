@@ -17,12 +17,16 @@ in
   };
   config = mkIf cfg.enable {
     boot = {
-      # extraModulePackages = [ pkgs.${namespace}.universal-pidff ];
-      # extraModulePackages = [
-      # universal-pidff
-      # ];
+      extraModulePackages = [
+        pkgs.${namespace}.universal-pidff
+        # config.boot.kernelPackages.universal-pidff
+      ];
     };
-    environment.systemPackages = [ pkgs.${namespace}.boxflat ];
+    environment.systemPackages = [
+      pkgs.${namespace}.boxflat
+      pkgs.linuxConsoleTools
+      # pkgs.${namespace}.ffb-tools
+    ];
     services.udev.packages = [ pkgs.${namespace}.boxflat ];
   };
 }
