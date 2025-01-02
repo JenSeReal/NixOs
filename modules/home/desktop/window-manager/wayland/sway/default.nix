@@ -43,7 +43,7 @@ in
       config = {
         modifier = "Mod4";
         terminal = "${getExe config.programs.wezterm.package}";
-        menu = " ${getExe pkgs.yofi}";
+        menu = "${getExe pkgs.yofi} binapps";
         bars = [ { command = "${getExe pkgs.waybar}"; } ];
         input = {
           "*" = {
@@ -88,7 +88,80 @@ in
               class = "^Firefox$";
             };
           }
+          {
+            command = "floating enable";
+            criteria = {
+              class = "steam";
+            };
+
+          }
+          {
+            command = "floating disable";
+            criteria = {
+              class = "steam";
+              title = "^Steam$";
+            };
+          }
         ];
+        assigns = {
+          "1" = [
+            { title = "^(.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$"; }
+          ];
+          "2" = [
+            { app_id = "^Code$"; }
+            { app_id = "^neovide$"; }
+            { app_id = "^GitHub Desktop$"; }
+            { app_id = "^GitKraken$"; }
+          ];
+          "3" = [ ];
+          "4" = [
+            { class = "^steam_app_.*$"; }
+          ];
+          "5" = [
+            { app_id = "^thunderbird$"; }
+          ];
+          "6" = [
+            { app_id = "^mpv|vlc|VLC|mpdevil$"; }
+            { app_id = "^Spotify$"; }
+            { title = "^Spotify$"; }
+            { title = "^Spotify Free$"; }
+            { class = "^elisa$"; }
+          ];
+          "7" = [ ];
+          "8" = [ { app_id = "^io.github.lawstorant.boxflat$"; } ];
+          "9" = [
+            { app_id = "^(discord|WebCord)$"; }
+            { app_id = "^Element$"; }
+          ];
+          "10" = [
+            { class = "^steam$"; }
+            { app_id = "^net.lutris.Lutris$"; }
+          ];
+
+        };
+
+        floating = {
+          criteria = [
+            # Float specific applications
+            { class = "Rofi"; }
+            { class = "viewnior"; }
+            { class = "feh"; }
+            { class = "wlogout"; }
+            { class = "file_progress"; }
+            { class = "confirm"; }
+            { class = "dialog"; }
+            { class = "download"; }
+            { class = "notification"; }
+            { class = "error"; }
+            { class = "splash"; }
+            { class = "confirmreset"; }
+            { class = "org.kde.polkit-kde-authentication-agent-1"; }
+            { class = "wdisplays"; }
+            { class = "blueman-manager"; }
+            { class = "nm-connection-editor"; }
+            { title = "^(floatterm)$"; }
+          ];
+        };
       };
     };
   };

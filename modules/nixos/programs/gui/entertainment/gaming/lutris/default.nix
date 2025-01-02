@@ -22,13 +22,18 @@ in
 
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      pkgs.wineWowPackages.stagingFull
-      pkgs.wineWowPackages.waylandFull
-      pkgs.winetricks
-      pkgs.protontricks
+      pkgs.protonup-qt
       pkgs.vulkan-tools
       (pkgs.lutris.override {
-        extraPkgs = pkgs: cfg.extraPackages;
+        extraPkgs =
+          pkgs:
+          cfg.extraPackages
+          ++ [
+            pkgs.wineWowPackages.stagingFull
+            pkgs.wineWowPackages.waylandFull
+            pkgs.winetricks
+            pkgs.protontricks
+          ];
         extraLibraries = pkgs: cfg.extraLibraries;
       })
     ];
