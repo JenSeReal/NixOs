@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    stylix.image = ./2.jpg;
+    stylix.image = ./P13_Background1.png;
     stylix.polarity = "dark";
     stylix.base16Scheme = ./synthwave84.yaml;
 
