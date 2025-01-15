@@ -3,7 +3,7 @@ name: Update Flake Inputs
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 2 * * *
+    - cron: 0 3 * * MON
 
 permissions:
   contents: write
