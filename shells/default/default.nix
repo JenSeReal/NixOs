@@ -5,12 +5,6 @@
   ...
 }:
 
-let
-  setupScript = pkgs.writeShellScriptBin "setup-env" ''
-    [ ! -f .env ] || export $(grep -v '^#' .env | xargs);
-    ${lib.getExe pkgs.biome} start
-  '';
-in
 inputs.devenv.lib.mkShell {
   inherit inputs pkgs;
 
@@ -23,6 +17,19 @@ inputs.devenv.lib.mkShell {
         nix.enable = true;
         nix.lsp.package = pkgs.nixd;
       };
+
+      # processes.biome = {
+      #   exec = "${lib.getExe pkgs.biome} start";
+      #   process-compose = {
+      #     is_daemon = true;
+      #     shutdown = {
+      #       command = "${lib.getExe pkgs.biome} stop";
+      #     };
+      #     availability = {
+      #       restart = "on_failure";
+      #     };
+      #   };
+      # };
 
       packages =
         [
@@ -48,7 +55,10 @@ inputs.devenv.lib.mkShell {
           ]
         );
 
-      enterShell = "${setupScript}/bin/setup-env";
+      enterShell = ''
+        [ ! -f .env ] || export $(grep -v '^#' .env | xargs)
+        # nohup ${lib.getExe pkgs.biome} start </dev/null >/dev/null 2>&1 &
+      '';
     }
   ];
 }

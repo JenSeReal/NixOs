@@ -1,9 +1,9 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   namespace,
+  inputs,
   ...
 }:
 let
@@ -13,9 +13,9 @@ let
 in
 {
   imports = with inputs; [
+    ./hardware-configuration.nix
     nixos-hardware.nixosModules.common-hidpi
     nixos-hardware.nixosModules.framework-13-7040-amd
-    ./hardware-configuration.nix
   ];
 
   # hardware.framework.amd-7040.preventWakeOnAC = true;
