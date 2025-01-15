@@ -13,7 +13,7 @@ in
 {
   options.${namespace}.desktop.display-manager.tuigreet = {
     enable = mkBoolOpt false "Whether or not to enable tuigreet.";
-    autologin = mkStrOpt "" "The user to autologin as.";
+    autoLogin = mkStrOpt "" "The user to autologin as.";
     defaultSession = mkStrOpt "sway" "The default session to start.";
   };
 
@@ -25,9 +25,9 @@ in
           command = "${getExe pkgs.greetd.tuigreet} --time -r --cmd ${cfg.defaultSession}";
           user = "greeter";
         };
-        initial_session = mkIf (cfg.autologin != "") {
-          command = "${getExe pkgs.sway}";
-          user = cfg.autologin;
+        initial_session = mkIf (cfg.autoLogin != "") {
+          command = "${cfg.defaultSession}";
+          user = cfg.autoLogin;
         };
       };
     };

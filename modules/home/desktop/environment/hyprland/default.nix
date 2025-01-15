@@ -3,10 +3,10 @@ with lib;
 with lib.JenSeReal;
 let
 
-  cfg = config.JenSeReal.desktop-environment.hyprland;
+  cfg = config.JenSeReal.desktop.environment.hyprland;
 in
 {
-  options.JenSeReal.desktop-environment.hyprland = {
+  options.JenSeReal.desktop.environment.hyprland = {
     enable = mkEnableOption "Hyprland.";
   };
 
@@ -35,7 +35,7 @@ in
       layout-manager.way-displays.enable = true;
       # library.qt.enable = true;
     };
-    JenSeReal.programs.gui.browser.firefox.enable = true;
+    # JenSeReal.programs.gui.browser.firefox.enable = true;
     JenSeReal.programs.gui.terminal-emulators.kitty.enable = true;
 
   };

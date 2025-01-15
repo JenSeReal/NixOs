@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 with lib.JenSeReal;
 let
 
   cfg = config.JenSeReal.desktop.window-managers.hyprland;
-in {
+in
+{
   options.JenSeReal.desktop.window-managers.hyprland = {
     enable = mkEnableOption "Hyprland.";
     extraConfig = lib.mkOption {
@@ -30,8 +36,7 @@ in {
   config = mkIf cfg.enable {
     programs.waybar.systemd.target = "hyprland-session.target";
 
-    systemd.user.services.swayidle.Install.WantedBy =
-      lib.mkForce [ "hyprland-session.target" ];
+    systemd.user.services.swayidle.Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -40,16 +45,11 @@ in {
         env = XDG_DATA_DIRS,'${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}':$XDG_DATA_DIRS
         env = HYPRLAND_TRACE,1
 
-        device:elan-touchscreen {
-          enabled = false
-        }
-
         ${cfg.extraConfig}
       '';
 
       settings = {
-        exec =
-          [ ''notify-send -i ~/.face -u normal -t 5000 "Hello $(whoami)"'' ];
+        exec = [ ''notify-send -i ~/.face -u normal -t 5000 "Hello $(whoami)"'' ];
       };
     };
   };

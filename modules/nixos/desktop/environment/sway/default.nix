@@ -22,7 +22,7 @@ in
       window-manager.sway = enabled;
       display-manager.tuigreet = {
         enable = true;
-        autologin = "jfp";
+        autoLogin = "jfp";
       };
     };
 

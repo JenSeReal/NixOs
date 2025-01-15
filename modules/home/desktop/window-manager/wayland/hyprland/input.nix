@@ -1,12 +1,14 @@
 { config, lib, ... }:
 with lib;
-let cfg = config.JenSeReal.desktop.window-managers.hyprland;
-in {
+let
+  cfg = config.JenSeReal.desktop.window-managers.hyprland;
+in
+{
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
         master = {
-          new_is_master = true;
+          new_status = "master";
           orientation = "right";
         };
 
@@ -40,16 +42,25 @@ in {
           sensitivity = 0;
         };
 
-        "device:at-translated-set-2-keyboard" = { numlock_by_default = false; };
-
-        "device:metadot---das-keyboard-das-keyboard" = {
-          kb_layout = "us";
-          kb_variant = "";
-        };
-
-        "device:elan-touchscreen" = { enabled = "no"; };
-
-        "device:elan-touchscreen-stylus" = { enabled = "no"; };
+        device = [
+          {
+            name = "at-translated-set-2-keyboard";
+            numlock_by_default = false;
+          }
+          {
+            name = "device:metadot---das-keyboard-das-keyboard";
+            kb_layout = "us";
+            kb_variant = "";
+          }
+          {
+            name = "device:elan-touchscreen";
+            enabled = "no";
+          }
+          {
+            name = "device:elan-touchscreen-stylus";
+            enabled = "no";
+          }
+        ];
       };
     };
   };

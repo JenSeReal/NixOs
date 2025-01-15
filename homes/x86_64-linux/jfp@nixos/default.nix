@@ -2,7 +2,6 @@
   lib,
   config,
   namespace,
-  pkgs,
   ...
 }:
 let
@@ -11,7 +10,8 @@ in
 {
   JenSeReal = {
     desktop = {
-      environment.sway = enabled;
+      # environment.sway = enabled;
+      environment.hyprland = enabled;
     };
     programs = {
       cli = {

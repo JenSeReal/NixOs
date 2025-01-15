@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   inputs,
   ...
 }:
@@ -10,10 +9,10 @@ with lib;
 with lib.JenSeReal;
 with inputs;
 let
-  cfg = config.JenSeReal.desktop.window-managers.hyprland;
+  cfg = config.JenSeReal.desktop.window-manager.wayland.hyprland;
 in
 {
-  options.JenSeReal.desktop.window-managers.hyprland = with types; {
+  options.JenSeReal.desktop.window-manager.wayland.hyprland = with types; {
     enable = mkEnableOption "Whether or not to use Hyprland as the desktop environment.";
   };
 
@@ -43,36 +42,5 @@ in
       xwayland.enable = true;
     };
     programs.dconf.enable = true;
-
-    JenSeReal = {
-      desktop.display-manager.tuigreet.enable = true;
-      desktop.bars.waybar.enable = true;
-      desktop.launchers.kickoff.enable = true;
-      desktop.notifications.mako.enable = true;
-      desktop.portals.xdg.enable = true;
-      desktop.idle-managers.swayidle.enable = true;
-      desktop.logout-menu.wlogout.enable = true;
-      desktop.screen-locker.swaylock-effects.enable = true;
-      desktop.libraries.qt.enable = true;
-      desktop.layout-manager.kanshi.enable = true;
-      desktop.layout-manager.way-displays.enable = true;
-      desktop.layout-manager.wlr-randr.enable = true;
-      hardware.audio.pipewire.enable = true;
-      suites.wlroots.enable = true;
-      security = {
-        keyring.enable = true;
-        polkit.enable = true;
-        bitwarden.enable = true;
-      };
-      gui.browser.firefox.enable = true;
-      gui.file-manager.nemo.enable = true;
-      theming.stylix.enable = true;
-    };
-
-    environment.systemPackages = with pkgs; [
-      pciutils
-      kitty
-      swayosd
-    ];
   };
 }

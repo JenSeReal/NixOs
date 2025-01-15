@@ -201,7 +201,8 @@ in
       lutris = enabled;
       steam = enabled;
     };
-    desktop.environment.sway = enabled;
+    # desktop.environment.sway = enabled;
+    desktop.environment.hyprland = enabled;
     hardware = {
       audio.pipewire = enabled;
       bluetooth = enabled;
