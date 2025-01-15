@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
       # url = "github:nix-community/home-manager/master";
@@ -112,6 +113,15 @@
       };
     in
     lib.mkFlake {
+      outputs-builder = channels: {
+        formatter = channels.nixpkgs.alejandra;
+      };
+
+      systems.hosts.nixos.modules = with inputs; [
+        nixos-hardware.nixosModules.common-hidpi
+        nixos-hardware.nixosModules.framework-13-7040-amd
+      ];
+
       channels-config = {
         allowUnfree = true;
         permittedInsecurePackages = [ ];

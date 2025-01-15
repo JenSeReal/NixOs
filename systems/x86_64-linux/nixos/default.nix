@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   namespace,
   ...
@@ -12,9 +11,7 @@ let
 
 in
 {
-  imports = with inputs; [
-    nixos-hardware.nixosModules.common-hidpi
-    nixos-hardware.nixosModules.framework-13-7040-amd
+  imports = [
     ./hardware-configuration.nix
   ];
 
