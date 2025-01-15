@@ -117,11 +117,6 @@
         formatter = channels.nixpkgs.alejandra;
       };
 
-      systems.hosts.nixos.modules = with inputs; [
-        nixos-hardware.nixosModules.common-hidpi
-        nixos-hardware.nixosModules.framework-13-7040-amd
-      ];
-
       channels-config = {
         allowUnfree = true;
         permittedInsecurePackages = [ ];
