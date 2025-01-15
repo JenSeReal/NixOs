@@ -175,7 +175,7 @@ in
 
         "window.commandCenter" = false;
         "window.menuBarVisibility" = mkIf (!is-darwin) "toggle";
-        "window.titleBarStyle" = "custom";
+        "window.titleBarStyle" = "native";
         "workbench.colorTheme" = mkDefault "SynthWave '84";
         "workbench.iconTheme" = "vscode-icons";
         "workbench.layoutControl.enabled" = false;
